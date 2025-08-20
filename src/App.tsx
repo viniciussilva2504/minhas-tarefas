@@ -1,30 +1,43 @@
-import { useState } from 'react'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
 import EstiloGlobal, { Container } from './styles'
 import BarraLateral from './containers/BarraLateral'
-import ListaDeTarefas from './containers/ListaDeTarefas'
-import Formulario from './components/Formulario'
-
+import Home from './pages/Home'
+import NovaTarefa from './pages/NovaTarefa'
 import store from './store'
 
-function App() {
-  const [estaExibindoFormulario, setEstaExibindoFormulario] = useState(false)
+const Layout = ({ children }: { children: React.ReactNode }) => (
+  <Container>
+    <BarraLateral mostrarFiltros={true} />
+    <main>{children}</main>
+  </Container>
+)
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: (
+      <Layout>
+        <Home />
+      </Layout>
+    )
+  },
+  {
+    path: '/nova-tarefa',
+    element: (
+      <Layout>
+        <NovaTarefa />
+      </Layout>
+    )
+  }
+])
+
+function App() {
   return (
     <Provider store={store}>
       <EstiloGlobal />
-      <Container>
-        <BarraLateral
-          mostrarFiltros={true}
-          mostrarFormulario={() => setEstaExibindoFormulario(true)}
-          estaExibindoFormulario={estaExibindoFormulario}
-          voltarParaLista={() => setEstaExibindoFormulario(false)}
-        />
-        <main>
-          {estaExibindoFormulario ? <Formulario /> : <ListaDeTarefas />}
-        </main>
-      </Container>
+      <RouterProvider router={router} />
     </Provider>
   )
 }

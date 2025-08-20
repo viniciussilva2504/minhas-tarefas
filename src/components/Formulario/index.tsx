@@ -1,5 +1,6 @@
 import { FormEvent, SetStateAction, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import { cadastrar } from '../../store/reducers/tarefas'
 import * as enums from '../../utils/enums/Tarefa'
@@ -7,6 +8,7 @@ import * as S from './styles'
 
 const Formulario = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [titulo, setTitulo] = useState('')
   const [descricao, setDescricao] = useState('')
   const [prioridade, setPrioridade] = useState(enums.Prioridade.NORMAL)
@@ -25,6 +27,7 @@ const Formulario = () => {
     setTitulo('')
     setDescricao('')
     setPrioridade(enums.Prioridade.NORMAL)
+    navigate('/')
   }
 
   return (

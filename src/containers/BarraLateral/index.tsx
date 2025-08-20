@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate, useLocation } from 'react-router-dom'
 import FiltroCard from '../../components/FiltroCard'
 import { RootReducer } from '../../store'
 import * as enums from '../../utils/enums/Tarefa'
@@ -8,20 +9,16 @@ import { alterarTermo, alterarFiltro } from '../../store/reducers/filtros'
 
 type Props = {
   mostrarFiltros: boolean
-  mostrarFormulario: () => void
-  estaExibindoFormulario?: boolean
-  voltarParaLista?: () => void
 }
 
-const BarraLateral = ({
-  mostrarFiltros,
-  mostrarFormulario,
-  estaExibindoFormulario = false,
-  voltarParaLista
-}: Props) => {
+const BarraLateral = ({ mostrarFiltros }: Props) => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
   const { termo, criterio } = useSelector((state: RootReducer) => state.filtros)
   const { itens } = useSelector((state: RootReducer) => state.tarefas)
+
+  const estaExibindoFormulario = location.pathname === '/nova-tarefa'
 
   const getContador = (criterio: string) => {
     if (criterio === 'todas') return itens.length
@@ -148,8 +145,10 @@ const BarraLateral = ({
               />
             </S.Filtros>
             <S.BotaoAdicionar
-              onClick={
-                estaExibindoFormulario ? voltarParaLista : mostrarFormulario
+              onClick={() =>
+                estaExibindoFormulario
+                  ? navigate('/')
+                  : navigate('/nova-tarefa')
               }
               type="button"
             >
