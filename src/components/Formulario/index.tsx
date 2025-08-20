@@ -13,6 +13,12 @@ const Formulario = () => {
   const [descricao, setDescricao] = useState('')
   const [prioridade, setPrioridade] = useState(enums.Prioridade.NORMAL)
 
+  const formatarPrioridade = (prioridade: string) => {
+    return (
+      prioridade.charAt(0).toUpperCase() + prioridade.slice(1).toLowerCase()
+    )
+  }
+
   const cadastrarTarefa = (evento: FormEvent) => {
     evento.preventDefault()
 
@@ -65,7 +71,7 @@ const Formulario = () => {
               id={prioridade}
               defaultChecked={prioridade === enums.Prioridade.NORMAL}
             />{' '}
-            <label htmlFor={prioridade}>{prioridade}</label>
+            <label htmlFor={prioridade}>{formatarPrioridade(prioridade)}</label>
           </S.Opcao>
         ))}
       </S.Opcoes>
