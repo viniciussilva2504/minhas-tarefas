@@ -5,3 +5,8 @@ export const Container = styled.main`
   height: 100vh;
   overflow-y: scroll; // Permite apenas rolagem vertical
 `
+
+export const Mensagem = styled.p`
+  text-align: center;
+  margin-top: 5px;
+`

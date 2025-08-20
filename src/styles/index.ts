@@ -15,4 +15,19 @@ export const Container = styled.div`
   grid-template-columns: 224px auto;
 `
 
+export const BotaoAdicionar = styled.button`
+  height: 64px;
+  position: fixed;
+  top: 80px;
+  right: 40px;
+  background-color: #44bd32;
+  border-radius: 50px;
+  padding: 0 16px;
+  font-weight: bold;
+  font-size: 12px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+`
+
 export default EstiloGlobal
