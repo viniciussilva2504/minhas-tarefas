@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
 import * as S from './styles'
+import * as enums from '../../utils/enums/Tarefa'
 
 import { remover, editar } from '../../store/reducers/tarefas'
 import TarefaClass from '../../models/Tarefa'
@@ -28,6 +29,23 @@ const Tarefa = ({
   function cancelarEdicao() {
     setEstaEditando(false)
     setDescricao(descricaoOriginal)
+  }
+
+  function alternarStatus() {
+    const novoStatus =
+      status === enums.Status.PENDENTE
+        ? enums.Status.CONCLUIDA
+        : enums.Status.PENDENTE
+
+    dispatch(
+      editar({
+        descricao,
+        prioridade,
+        status: novoStatus,
+        titulo,
+        id
+      })
+    )
   }
 
   return (
@@ -70,6 +88,9 @@ const Tarefa = ({
         ) : (
           <>
             <S.Botao onClick={() => setEstaEditando(true)}>Editar</S.Botao>
+            <S.BotaoSalvar onClick={alternarStatus}>
+              {status === enums.Status.PENDENTE ? 'Concluir' : 'Reabrir'}
+            </S.BotaoSalvar>
             <S.BotaoCancelarRemover onClick={() => dispatch(remover(id))}>
               Remover
             </S.BotaoCancelarRemover>
