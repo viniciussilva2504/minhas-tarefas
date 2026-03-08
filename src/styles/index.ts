@@ -12,7 +12,8 @@ const EstiloGlobal = createGlobalStyle`
 
 export const Container = styled.div`
   display: grid;
-  grid-template-columns: 224px auto;
+  grid-template-columns: 224px 1fr 260px;
+  min-height: 100vh;
 `
 
 export const BotaoAdicionar = styled.button`

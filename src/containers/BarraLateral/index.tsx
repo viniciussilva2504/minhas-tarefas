@@ -6,6 +6,7 @@ import * as enums from '../../utils/enums/Tarefa'
 
 import * as S from './styles'
 import { alterarTermo, alterarFiltro } from '../../store/reducers/filtros'
+import Calendario from '../../components/Calendario'
 
 type Props = {
   mostrarFiltros: boolean
@@ -156,6 +157,7 @@ const BarraLateral = ({ mostrarFiltros }: Props) => {
                 ? 'Voltar à lista de tarefas'
                 : 'Cadastrar nova tarefa'}
             </S.BotaoAdicionar>
+            <Calendario />
           </>
         )}
       </div>

@@ -52,10 +52,10 @@ export const Descricao = styled.textarea`
   line-height: 24px;
   font-family: 'Roboto Mono', monostace;
   display: block;
-  width: 100%;
+  width: 50%;
   margin-bottom: 16px;
   margin-top: 16px;
-  resize: none; // Impede o redimensionamento do textarea
+  resize: none;
   border: none;
   background-color: transparent;
 `

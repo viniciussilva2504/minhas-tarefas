@@ -5,12 +5,14 @@ import EstiloGlobal, { Container } from './styles'
 import BarraLateral from './containers/BarraLateral'
 import Home from './pages/Home'
 import NovaTarefa from './pages/NovaTarefa'
+import Planner from './components/Planner'
 import store from './store'
 
 const Layout = ({ children }: { children: React.ReactNode }) => (
   <Container>
     <BarraLateral mostrarFiltros={true} />
     <main>{children}</main>
+    <Planner />
   </Container>
 )
 
