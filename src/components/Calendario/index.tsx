@@ -1,7 +1,6 @@
-import { useState } from 'react'
+import { useCalendario } from '../../hooks/useCalendario'
 import * as S from './styles'
-
-const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'SÃ¡b']
+const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
 
 const meses = [
   'Janeiro',
@@ -18,65 +17,87 @@ const meses = [
   'Dezembro'
 ]
 
-const Calendario = () => {
-  const hoje = new Date()
-  const [mesAtual, setMesAtual] = useState(hoje.getMonth())
-  const [anoAtual, setAnoAtual] = useState(hoje.getFullYear())
+interface CalendarioProps {
+  onDiaSelecionado?: (data: Date) => void
+  diaSelecionado?: Date
+}
 
+const Calendario = ({ onDiaSelecionado, diaSelecionado }: CalendarioProps) => {
+  const {
+    mesAtual,
+    anoAtual,
+    diaSelecionado: diaSel,
+    setDiaSelecionado,
+    irParaMesAnterior,
+    irParaProximoMes
+  } = useCalendario(diaSelecionado)
+
+  const hoje = new Date()
   const primeiroDiaDoMes = new Date(anoAtual, mesAtual, 1).getDay()
   const diasNoMes = new Date(anoAtual, mesAtual + 1, 0).getDate()
   const diasNoMesAnterior = new Date(anoAtual, mesAtual, 0).getDate()
 
-  const mesAnterior = () => {
-    if (mesAtual === 0) {
-      setMesAtual(11)
-      setAnoAtual(anoAtual - 1)
-    } else {
-      setMesAtual(mesAtual - 1)
-    }
-  }
-
-  const proximoMes = () => {
-    if (mesAtual === 11) {
-      setMesAtual(0)
-      setAnoAtual(anoAtual + 1)
-    } else {
-      setMesAtual(mesAtual + 1)
-    }
-  }
-
   const renderizarDias = () => {
     const dias = []
 
-    // Dias do mÃªs anterior
+    // Dias do mês anterior
     for (let i = primeiroDiaDoMes - 1; i >= 0; i--) {
+      const diaNum = diasNoMesAnterior - i
+      const data = new Date(anoAtual, mesAtual - 1, diaNum)
       dias.push(
-        <S.Dia key={`prev-${i}`} foraDoMes>
-          {diasNoMesAnterior - i}
+        <S.Dia
+          key={`prev-${i}`}
+          foraDoMes
+          selecionado={diaSel && data.toDateString() === diaSel.toDateString()}
+          onClick={() => {
+            setDiaSelecionado(data)
+            onDiaSelecionado && onDiaSelecionado(data)
+          }}
+        >
+          {diaNum}
         </S.Dia>
       )
     }
 
-    // Dias do mÃªs atual
+    // Dias do mês atual
     for (let dia = 1; dia <= diasNoMes; dia++) {
+      const data = new Date(anoAtual, mesAtual, dia)
       const eHoje =
         dia === hoje.getDate() &&
         mesAtual === hoje.getMonth() &&
         anoAtual === hoje.getFullYear()
-
+      const selecionado =
+        diaSel && data.toDateString() === diaSel.toDateString()
       dias.push(
-        <S.Dia key={`cur-${dia}`} hoje={eHoje}>
+        <S.Dia
+          key={`cur-${dia}`}
+          hoje={eHoje}
+          selecionado={selecionado}
+          onClick={() => {
+            setDiaSelecionado(data)
+            onDiaSelecionado && onDiaSelecionado(data)
+          }}
+        >
           {dia}
         </S.Dia>
       )
     }
 
-    // Dias do prÃ³ximo mÃªs para completar a grade
+    // Dias do próximo mês para completar a grade
     const totalCells = dias.length
     const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7)
     for (let i = 1; i <= remaining; i++) {
+      const data = new Date(anoAtual, mesAtual + 1, i)
       dias.push(
-        <S.Dia key={`next-${i}`} foraDoMes>
+        <S.Dia
+          key={`next-${i}`}
+          foraDoMes
+          selecionado={diaSel && data.toDateString() === diaSel.toDateString()}
+          onClick={() => {
+            setDiaSelecionado(data)
+            onDiaSelecionado && onDiaSelecionado(data)
+          }}
+        >
           {i}
         </S.Dia>
       )
@@ -88,11 +109,11 @@ const Calendario = () => {
   return (
     <S.CalendarioContainer>
       <S.Header>
-        <S.BotaoNav onClick={mesAnterior}>â—€</S.BotaoNav>
+        <S.BotaoNav onClick={irParaMesAnterior}>←</S.BotaoNav>
         <S.MesAno>
           {meses[mesAtual]} {anoAtual}
         </S.MesAno>
-        <S.BotaoNav onClick={proximoMes}>â–¶</S.BotaoNav>
+        <S.BotaoNav onClick={irParaProximoMes}>→</S.BotaoNav>
       </S.Header>
       <S.GradeDias>
         {diasSemana.map((dia) => (

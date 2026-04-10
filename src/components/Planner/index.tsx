@@ -1,16 +1,19 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import {
+  salvarDadosPorData,
+  carregarDadosPorData
+} from '../../services/localStorageService'
 import * as S from './styles'
-
-const diasSemanaAbrev = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'SÃ¡b', 'Dom']
+const diasSemanaAbrev = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom']
 
 const diasSemanaNomes = [
   'Domingo',
   'Segunda-feira',
-  'TerÃ§a-feira',
+  'Terça-feira',
   'Quarta-feira',
   'Quinta-feira',
   'Sexta-feira',
-  'SÃ¡bado'
+  'Sábado'
 ]
 
 const meses = [
@@ -60,39 +63,69 @@ type HabitItem = {
   dias: boolean[] // 7 dias da semana
 }
 
-const Planner = () => {
-  const hoje = new Date()
+interface PlannerProps {
+  diaSelecionado: Date
+}
 
-  // Estado do planner diÃ¡rio
-  const [plannerItems, setPlannerItems] = useState<Record<string, string>>(
-    () => {
-      const items: Record<string, string> = {}
-      horariosPlanner.forEach((h) => (items[h] = ''))
-      return items
+const Planner = ({ diaSelecionado }: PlannerProps) => {
+  const hoje = diaSelecionado
+
+  // Carregar dados do localStorage ao trocar de dia
+  const [plannerItems, setPlannerItems] = useState<Record<string, string>>({})
+  const [todos, setTodos] = useState<TodoPlanner[]>([])
+  const [habits, setHabits] = useState<HabitItem[]>([])
+
+  useEffect(() => {
+    const valorPadrao = {
+      plannerItems: (() => {
+        const items: Record<string, string> = {}
+        horariosPlanner.forEach((h) => (items[h] = ''))
+        return items
+      })(),
+      todos: [
+        {
+          id: 1,
+          texto: '',
+          concluido: false
+        },
+        {
+          id: 2,
+          texto: '',
+          concluido: false
+        },
+        {
+          id: 3,
+          texto: '',
+          concluido: false
+        }
+      ],
+      habits: [
+        {
+          id: 1,
+          nome: '',
+          dias: [false, false, false, false, false, false, false]
+        },
+        {
+          id: 2,
+          nome: '',
+          dias: [false, false, false, false, false, false, false]
+        },
+        {
+          id: 3,
+          nome: '',
+          dias: [false, false, false, false, false, false, false]
+        }
+      ]
     }
-  )
+    const dados = carregarDadosPorData(diaSelecionado, valorPadrao)
+    setPlannerItems(dados.plannerItems)
+    setTodos(dados.todos)
+    setHabits(dados.habits)
+  }, [diaSelecionado])
 
-  // Estado da lista de tarefas do planner
-  const [todos, setTodos] = useState<TodoPlanner[]>([
-    { id: 1, texto: '', concluido: false },
-    { id: 2, texto: '', concluido: false },
-    { id: 3, texto: '', concluido: false }
-  ])
-
-  // Estado do habit tracker
-  const [habits, setHabits] = useState<HabitItem[]>([
-    {
-      id: 1,
-      nome: '',
-      dias: [false, false, false, false, false, false, false]
-    },
-    {
-      id: 2,
-      nome: '',
-      dias: [false, false, false, false, false, false, false]
-    },
-    { id: 3, nome: '', dias: [false, false, false, false, false, false, false] }
-  ])
+  useEffect(() => {
+    salvarDadosPorData(diaSelecionado, { plannerItems, todos, habits })
+  }, [plannerItems, todos, habits, diaSelecionado])
 
   const atualizarPlanner = (hora: string, valor: string) => {
     setPlannerItems((prev) => ({ ...prev, [hora]: valor }))
@@ -159,7 +192,7 @@ const Planner = () => {
 
       {/* Planner diÃ¡rio */}
       <S.Secao>
-        <S.TituloSecao>ðŸ“‹ Planner do Dia</S.TituloSecao>
+        <S.TituloSecao>Planner do Dia</S.TituloSecao>
         {horariosPlanner.map((hora) => (
           <S.HorarioItem key={hora}>
             <S.Hora>{hora}</S.Hora>
@@ -174,7 +207,7 @@ const Planner = () => {
 
       {/* Lista de tarefas */}
       <S.Secao>
-        <S.TituloSecao>âœ… Tarefas do Dia</S.TituloSecao>
+        <S.TituloSecao>Tarefas do Dia</S.TituloSecao>
         {todos.map((todo) => (
           <S.TodoItem key={todo.id}>
             <S.Checkbox
@@ -195,7 +228,7 @@ const Planner = () => {
 
       {/* Habit Tracker */}
       <S.Secao>
-        <S.TituloSecao>ðŸŽ¯ Habit Tracker</S.TituloSecao>
+        <S.TituloSecao>Habit Tracker</S.TituloSecao>
         <S.HabitRow>
           <S.HabitNome as="span" style={{ color: 'transparent' }}>
             .
@@ -211,7 +244,7 @@ const Planner = () => {
             <S.HabitNome
               value={habit.nome}
               onChange={(e) => atualizarHabitNome(habit.id, e.target.value)}
-              placeholder="HÃ¡bito"
+              placeholder="Hábito"
             />
             <S.HabitDiasHeader>
               {habit.dias.map((marcado, index) => (

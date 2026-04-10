@@ -10,9 +10,15 @@ import Calendario from '../../components/Calendario'
 
 type Props = {
   mostrarFiltros: boolean
+  diaSelecionado: Date
+  onDiaSelecionado: (data: Date) => void
 }
 
-const BarraLateral = ({ mostrarFiltros }: Props) => {
+const BarraLateral = ({
+  mostrarFiltros,
+  diaSelecionado,
+  onDiaSelecionado
+}: Props) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
@@ -157,7 +163,10 @@ const BarraLateral = ({ mostrarFiltros }: Props) => {
                 ? 'Voltar à lista de tarefas'
                 : 'Cadastrar nova tarefa'}
             </S.BotaoAdicionar>
-            <Calendario />
+            <Calendario
+              diaSelecionado={diaSelecionado}
+              onDiaSelecionado={onDiaSelecionado}
+            />
           </>
         )}
       </div>

@@ -6,6 +6,15 @@ export const CalendarioContainer = styled.div`
   border-radius: 8px;
   padding: 12px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: 900px) {
+    max-width: 100%;
+    margin-top: 8px;
+  }
 `
 
 export const Header = styled.div`
@@ -51,18 +60,32 @@ export const DiaSemana = styled.span`
   padding: 2px 0;
 `
 
-export const Dia = styled.span<{ hoje?: boolean; foraDoMes?: boolean }>`
+export const Dia = styled.span<{
+  hoje?: boolean
+  foraDoMes?: boolean
+  selecionado?: boolean
+}>`
   font-size: 10px;
   padding: 3px 0;
   border-radius: 50%;
   color: ${(props) =>
     props.foraDoMes ? '#ccc' : props.hoje ? '#fff' : '#555'};
-  background-color: ${(props) => (props.hoje ? '#44bd32' : 'transparent')};
+  background-color: ${(props) =>
+    props.hoje ? '#44bd32' : props.selecionado ? '#d0e6fa' : 'transparent'};
   font-weight: ${(props) => (props.hoje ? 'bold' : 'normal')};
-  cursor: default;
+  cursor: pointer;
   aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
+  border: 2px solid
+    ${(props) => (props.selecionado ? '#2980f2' : 'transparent')};
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border 0.2s;
+  &:hover {
+    background-color: #eee;
+  }
 `

@@ -14,6 +14,11 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns: 224px 1fr 260px;
   min-height: 100vh;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
 `
 
 export const BotaoAdicionar = styled.button`
