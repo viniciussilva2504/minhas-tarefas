@@ -17,6 +17,19 @@
 
 ---
 
+## 📸 Screenshots
+
+| Tema Claro | Tema Escuro |
+|---|---|
+| ![Home — claro](docs/screenshots/desktop_home-light.png) | ![Home — escuro](docs/screenshots/desktop_home-dark.png) |
+| ![Nova Tarefa — claro](docs/screenshots/desktop_nova-tarefa-light.png) | ![Nova Tarefa — escuro](docs/screenshots/desktop_nova-tarefa-dark.png) |
+
+| Mobile | Tablet |
+|---|---|
+| ![Mobile](docs/screenshots/mobile_home-dark.png) | ![Tablet](docs/screenshots/tablet_home-dark.png) |
+
+---
+
 ## ✨ Funcionalidades
 
 - 📝 Criar tarefas com título, descrição, prioridade e prazo
@@ -107,6 +120,7 @@ npm run dev
 | `npm run preview` | Preview do build de produção |
 | `npm test` | Testes com Vitest em modo watch |
 | `npm run test:coverage` | Relatório de cobertura de testes |
+| `npm run screenshot` | Gera screenshots do deploy em `docs/screenshots/` |
 | `npm run lint` | Lint com ESLint |
 
 ---

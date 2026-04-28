@@ -29,6 +29,12 @@ yarn-debug.log*
 yarn-error.log*
 .vercel
 
+# Screenshots gerados pelo script
+docs/screenshots/*.png
+
 # IDE
 .vscode/settings.json
 .idea/
+
+.vercel
+.env*.local
