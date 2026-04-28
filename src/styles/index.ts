@@ -17,14 +17,14 @@ const EstiloGlobal = createGlobalStyle`
   }
 
   [data-theme='dark'] {
-    --color-bg: #0a0a0a;
-    --color-sidebar: #111111;
-    --color-card: #141414;
-    --color-text: #fafafa;
-    --color-text-muted: #6b6b6b;
-    --color-text-label: #e5e5e5;
-    --color-border: #262626;
-    --color-input-bg: #1a1a1a;
+    --color-bg: #131c2b;
+    --color-sidebar: #0f1722;
+    --color-card: #1a2535;
+    --color-text: #e8f1ff;
+    --color-text-muted: #7a9dbf;
+    --color-text-label: #c8dff0;
+    --color-border: #253652;
+    --color-input-bg: #0f1722;
     --color-shadow: rgba(0, 0, 0, 0.5);
     --color-accent: #ff5f1f;
     --color-accent-hover: #e04e0e;

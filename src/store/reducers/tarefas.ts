@@ -9,29 +9,7 @@ type TarefasState = {
 
 const initialState: TarefasState = {
   erro: null,
-  itens: [
-    {
-      id: 1,
-      descricao: 'Descrição da tarefa 1',
-      prioridade: enums.Prioridade.NORMAL,
-      status: enums.Status.CONCLUIDA,
-      titulo: 'Título da tarefa 1'
-    },
-    {
-      id: 2,
-      descricao: 'Descrição da tarefa 2',
-      prioridade: enums.Prioridade.NORMAL,
-      status: enums.Status.PENDENTE,
-      titulo: 'Título da tarefa 2'
-    },
-    {
-      id: 3,
-      descricao: 'Descrição da tarefa 3',
-      prioridade: enums.Prioridade.IMPORTANTE,
-      status: enums.Status.PENDENTE,
-      titulo: 'Título da tarefa 3'
-    }
-  ]
+  itens: []
 }
 
 const tarefasSlice = createSlice({
@@ -66,9 +44,12 @@ const tarefasSlice = createSlice({
     },
     limparErro: (state) => {
       state.erro = null
+    },
+    carregarTarefas: (state, action: PayloadAction<Tarefa[]>) => {
+      state.itens = action.payload
     }
   }
 })
 
-export const { remover, editar, cadastrar, limparErro } = tarefasSlice.actions
+export const { remover, editar, cadastrar, limparErro, carregarTarefas } = tarefasSlice.actions
 export default tarefasSlice.reducer

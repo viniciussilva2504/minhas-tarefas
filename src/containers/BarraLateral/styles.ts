@@ -24,6 +24,12 @@ export const Topo = styled.div`
   margin-bottom: 20px;
 `
 
+export const TopoAcoes = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+`
+
 export const TituloApp = styled.h1`
   font-size: 13px;
   font-weight: 800;

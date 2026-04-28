@@ -4,6 +4,7 @@ import FiltroCard from '../../components/FiltroCard'
 import { RootReducer } from '../../store'
 import * as enums from '../../utils/enums/Tarefa'
 import { useDarkMode } from '../../hooks/useDarkMode'
+import { useAuth } from '../../contexts/AuthContext'
 
 import * as S from './styles'
 import {
@@ -21,6 +22,7 @@ const BarraLateral = ({ mostrarFiltros }: Props) => {
   const navigate = useNavigate()
   const location = useLocation()
   const { darkMode, toggleDarkMode } = useDarkMode()
+  const { user, logout } = useAuth()
   const { termo, criterio, valor, ordenacao } = useSelector(
     (state: RootReducer) => state.filtros
   )
@@ -120,15 +122,26 @@ const BarraLateral = ({ mostrarFiltros }: Props) => {
       <div>
         <S.Topo>
           <S.TituloApp>Minhas Tarefas</S.TituloApp>
-          <S.BotaoTema
-            onClick={toggleDarkMode}
-            aria-label="Alternar tema"
-            title={
-              darkMode ? 'Mudar para tema claro' : 'Mudar para tema escuro'
-            }
-          >
-            {darkMode ? '☀️' : '🌙'}
-          </S.BotaoTema>
+          <S.TopoAcoes>
+            <S.BotaoTema
+              onClick={toggleDarkMode}
+              aria-label="Alternar tema"
+              title={
+                darkMode ? 'Mudar para tema claro' : 'Mudar para tema escuro'
+              }
+            >
+              {darkMode ? '☀️' : '🌙'}
+            </S.BotaoTema>
+            {user && (
+              <S.BotaoTema
+                onClick={logout}
+                aria-label="Sair da conta"
+                title={`Sair (${user.displayName ?? user.email})`}
+              >
+                →
+              </S.BotaoTema>
+            )}
+          </S.TopoAcoes>
         </S.Topo>
         {mostrarFiltros && (
           <>
