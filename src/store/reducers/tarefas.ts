@@ -4,9 +4,11 @@ import * as enums from '../../utils/enums/Tarefa'
 
 type TarefasState = {
   itens: Tarefa[]
+  erro: string | null
 }
 
 const initialState: TarefasState = {
+  erro: null,
   itens: [
     {
       id: 1,
@@ -37,9 +39,7 @@ const tarefasSlice = createSlice({
   initialState,
   reducers: {
     remover: (state, action: PayloadAction<number>) => {
-      state.itens = [
-        ...state.itens.filter((tarefa) => tarefa.id !== action.payload)
-      ]
+      state.itens = state.itens.filter((tarefa) => tarefa.id !== action.payload)
     },
     editar: (state, action: PayloadAction<Tarefa>) => {
       const indexDaTarefa = state.itens.findIndex(
@@ -56,19 +56,19 @@ const tarefasSlice = createSlice({
       )
 
       if (tarefaJaExiste) {
-        alert('Já existe uma tarefa com esse título')
+        state.erro = 'Já existe uma tarefa com esse título'
       } else {
-        const ultimaTarefa = state.itens[state.itens.length - 1]
-        const tarefaNova = {
-          ...action.payload,
-          id: ultimaTarefa ? ultimaTarefa.id + 1 : 1
-        }
-        state.itens.push(tarefaNova)
+        const maiorId =
+          state.itens.length > 0 ? Math.max(...state.itens.map((t) => t.id)) : 0
+        state.itens.push({ ...action.payload, id: maiorId + 1 })
+        state.erro = null
       }
+    },
+    limparErro: (state) => {
+      state.erro = null
     }
   }
 })
 
-//tarefaParaEditar = action.payload
-export const { remover, editar, cadastrar } = tarefasSlice.actions
+export const { remover, editar, cadastrar, limparErro } = tarefasSlice.actions
 export default tarefasSlice.reducer

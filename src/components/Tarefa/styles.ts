@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import variaveis from '../../styles/variaveis'
 
 import * as enums from '../../utils/enums/Tarefa'
@@ -21,12 +21,42 @@ function retornaCorDeFundo(props: TagProps): string {
   return '#ccc'
 }
 
+const fadeInUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`
+
 export const Card = styled.div`
-  background-color: #fcfcfc;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background-color: var(--color-card);
+  box-shadow: 0px 4px 4px var(--color-shadow);
   padding: 16px;
   margin-bottom: 32px;
   border-radius: 16px;
+  transition: background-color 0.2s;
+  animation: ${fadeInUp} 0.25s ease-out;
+`
+
+export const TagsRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 4px;
+`
+
+export const Prazo = styled.span<{ atrasada: boolean }>`
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 8px;
+  display: inline-block;
+  background-color: ${({ atrasada }) => (atrasada ? '#C23616' : '#2f3640')};
+  color: #fff;
 `
 
 export const Titulo = styled.h3`
@@ -47,21 +77,21 @@ export const Tag = styled.span<TagProps>`
 `
 
 export const Descricao = styled.textarea`
-  color: #8b8b8b;
+  color: var(--color-text-muted);
   font-size: 14px;
   line-height: 24px;
-  font-family: 'Roboto Mono', monostace;
+  font-family: 'Roboto Mono', monospace;
   display: block;
   width: 100%;
   margin-bottom: 16px;
   margin-top: 16px;
-  resize: none; // Impede o redimensionamento do textarea
+  resize: none;
   border: none;
   background-color: transparent;
 `
 
 export const BarraAcoes = styled.div`
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid var(--color-border);
   padding-top: 16px;
 `
 
@@ -81,4 +111,20 @@ export const BotaoSalvar = styled(Botao)`
 `
 export const BotaoCancelarRemover = styled(Botao)`
   background-color: ${variaveis.vermelho};
+`
+
+export const ConfirmacaoRemover = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border);
+
+  span {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--color-text-muted);
+    margin-right: 4px;
+  }
 `

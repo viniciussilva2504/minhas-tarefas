@@ -9,15 +9,23 @@ import TarefaClass from '../../models/Tarefa'
 
 type Props = TarefaClass
 
+function formatarPrazo(prazo?: string): string | null {
+  if (!prazo) return null
+  const [year, month, day] = prazo.split('-')
+  return `${day}/${month}/${year}`
+}
+
 const Tarefa = ({
   descricao: descricaoOriginal,
   prioridade,
   status,
   titulo,
-  id
+  id,
+  prazo
 }: Props) => {
   const dispatch = useDispatch()
   const [estaEditando, setEstaEditando] = useState(false)
+  const [estaConfirmandoRemocao, setEstaConfirmandoRemocao] = useState(false)
   const [descricao, setDescricao] = useState('')
 
   useEffect(() => {
@@ -48,24 +56,40 @@ const Tarefa = ({
     )
   }
 
+  const prazoFormatado = formatarPrazo(prazo)
+  const hoje = new Date()
+  hoje.setHours(0, 0, 0, 0)
+  const atrasada =
+    prazo &&
+    status === enums.Status.PENDENTE &&
+    new Date(prazo + 'T00:00:00') < hoje
+
   return (
-    <S.Card>
+    <S.Card role="article" aria-label={`Tarefa: ${titulo}`}>
       <S.Titulo>{titulo}</S.Titulo>
-      <S.Tag parametro="prioridade" prioridade={prioridade}>
-        {prioridade}
-      </S.Tag>
-      <S.Tag parametro="status" status={status}>
-        {status}
-      </S.Tag>
+      <S.TagsRow>
+        <S.Tag parametro="prioridade" prioridade={prioridade}>
+          {prioridade}
+        </S.Tag>
+        <S.Tag parametro="status" status={status}>
+          {status}
+        </S.Tag>
+        {prazoFormatado && (
+          <S.Prazo atrasada={!!atrasada}>📅 {prazoFormatado}</S.Prazo>
+        )}
+      </S.TagsRow>
       <S.Descricao
         disabled={!estaEditando}
         value={descricao}
         onChange={(evento) => setDescricao(evento.target.value)}
+        aria-label="Descrição da tarefa"
+        aria-multiline="true"
       />
-      <S.BarraAcoes>
+      <S.BarraAcoes aria-label="Ações da tarefa">
         {estaEditando ? (
           <>
             <S.BotaoSalvar
+              aria-label="Salvar edição"
               onClick={() => {
                 dispatch(
                   editar({
@@ -73,7 +97,8 @@ const Tarefa = ({
                     prioridade,
                     status,
                     titulo,
-                    id
+                    id,
+                    prazo
                   })
                 )
                 setEstaEditando(false)
@@ -81,20 +106,55 @@ const Tarefa = ({
             >
               Salvar
             </S.BotaoSalvar>
-            <S.BotaoCancelarRemover onClick={cancelarEdicao}>
+            <S.BotaoCancelarRemover
+              aria-label="Cancelar edição"
+              onClick={cancelarEdicao}
+            >
               Cancelar
             </S.BotaoCancelarRemover>
           </>
         ) : (
           <>
-            <S.Botao onClick={() => setEstaEditando(true)}>Editar</S.Botao>
-            <S.BotaoSalvar onClick={alternarStatus}>
+            <S.Botao
+              aria-label="Editar tarefa"
+              onClick={() => setEstaEditando(true)}
+            >
+              Editar
+            </S.Botao>
+            <S.BotaoSalvar
+              aria-label={
+                status === enums.Status.PENDENTE
+                  ? 'Concluir tarefa'
+                  : 'Reabrir tarefa'
+              }
+              onClick={alternarStatus}
+            >
               {status === enums.Status.PENDENTE ? 'Concluir' : 'Reabrir'}
             </S.BotaoSalvar>
-            <S.BotaoCancelarRemover onClick={() => dispatch(remover(id))}>
+            <S.BotaoCancelarRemover
+              aria-label="Remover tarefa"
+              onClick={() => setEstaConfirmandoRemocao(true)}
+            >
               Remover
             </S.BotaoCancelarRemover>
           </>
+        )}
+        {estaConfirmandoRemocao && (
+          <S.ConfirmacaoRemover>
+            <span>Confirmar remoção?</span>
+            <S.BotaoCancelarRemover
+              aria-label="Confirmar remoção da tarefa"
+              onClick={() => dispatch(remover(id))}
+            >
+              Sim
+            </S.BotaoCancelarRemover>
+            <S.Botao
+              aria-label="Cancelar remoção"
+              onClick={() => setEstaConfirmandoRemocao(false)}
+            >
+              Não
+            </S.Botao>
+          </S.ConfirmacaoRemover>
         )}
       </S.BarraAcoes>
     </S.Card>

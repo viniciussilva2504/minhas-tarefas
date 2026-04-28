@@ -8,7 +8,7 @@ import filtrosReducer from './reducers/filtros'
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['tarefas']
+  whitelist: ['tarefas', 'filtros']
 }
 
 const rootReducer = combineReducers({

@@ -5,7 +5,7 @@ export const Form = styled.form`
   width: 100%;
   font-weight: bold;
   font-size: 14px;
-  color: #666;
+  color: var(--color-text-label);
   margin-left: 10px;
 
   textarea {
@@ -20,18 +20,23 @@ export const Titulo = styled.h2`
   padding-top: 16px;
   font-size: 18px;
   font-weight: bold;
-  color: #999;
+  color: var(--color-text-muted);
 `
 
 export const Campo = styled.input`
   padding: 8px;
-  background-color: #fff;
+  background-color: var(--color-input-bg);
   border-radius: 8px;
   font-weight: bold;
-  color: #666;
-  border: 1px solid #666;
+  color: var(--color-text-label);
+  border: 1px solid var(--color-border);
   margin-bottom: 16px;
   width: 100%;
+
+  &:focus {
+    outline: 2px solid #1e90ff;
+    outline-offset: 1px;
+  }
 `
 
 export const BotaoSalvar = styled.button`
@@ -43,6 +48,13 @@ export const BotaoSalvar = styled.button`
   font-size: 12px;
   font-weight: bold;
   border: none;
+`
+
+export const MensagemErro = styled.p`
+  color: #c23616;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 8px;
 `
 
 export const Opcoes = styled.div`

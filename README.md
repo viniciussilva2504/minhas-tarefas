@@ -1,46 +1,132 @@
-# Getting Started with Create React App
+# ✅ Minhas Tarefas
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> Gerenciador de tarefas pessoais com filtros, ordenação, modo escuro e persistência local.
 
-## Available Scripts
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white&style=flat-square)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white&style=flat-square)
+![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-2-764ABC?logo=redux&logoColor=white&style=flat-square)
+![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white&style=flat-square)
+![Styled Components](https://img.shields.io/badge/Styled_Components-6-DB7093?logo=styled-components&logoColor=white&style=flat-square)
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg?style=flat-square)](LICENSE)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🚀 Demo
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+> Deploy: [minhas-tarefas em produção](#) *(adicione o link após deploy na Vercel/Netlify)*
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+---
 
-### `npm test`
+## ✨ Funcionalidades
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- 📝 Criar tarefas com título, descrição, prioridade e prazo
+- ✅ Concluir e reabrir tarefas
+- ✏️ Editar descrição de tarefas existentes
+- 🗑️ Remover tarefas
+- 🔍 Buscar tarefas por texto em tempo real
+- 🏷️ Filtrar por status (pendentes / concluídas), prioridade (urgente / importante / normal) e tarefas atrasadas
+- 📅 Indicador visual de prazo vencido
+- 📊 Ordenar por padrão, prazo (mais urgente) ou prioridade
+- 🌙 Modo escuro com alternância rápida e persistência no `localStorage`
+- 💾 Persistência automática no `localStorage` com `redux-persist`
+- 📱 Layout responsivo (mobile-first)
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🛠️ Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+| Camada | Tecnologia |
+|---|---|
+| UI | React 18 + TypeScript 5 |
+| Estado global | Redux Toolkit 2 |
+| Persistência | redux-persist → localStorage |
+| Roteamento | React Router DOM v7 |
+| Estilização | Styled-Components v6 |
+| Build | Vite 5 |
+| Testes | Vitest + Testing Library |
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 📁 Estrutura de pastas
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+src/
+├── components/
+│   ├── ErrorBoundary/     # Captura erros React em produção
+│   ├── FiltroCard/        # Card de filtro na barra lateral
+│   ├── Formulario/        # Formulário de nova tarefa
+│   ├── Loading/           # Spinner de carregamento
+│   └── Tarefa/            # Card de tarefa com ações
+├── containers/
+│   ├── BarraLateral/      # Sidebar com busca, filtros e navegação
+│   └── ListaDeTarefas/    # Lista filtrada e ordenada de tarefas
+├── hooks/
+│   └── useDarkMode.ts     # Hook de tema (localStorage + prefers-color-scheme)
+├── models/
+│   └── Tarefa.ts          # Classe de domínio
+├── pages/
+│   ├── Home/              # Listagem principal
+│   └── NovaTarefa/        # Criar nova tarefa
+├── store/
+│   ├── index.ts           # Configuração Redux + redux-persist
+│   └── reducers/
+│       ├── tarefas.ts     # Slice: CRUD + estado de erro
+│       └── filtros.ts     # Slice: busca, filtros e ordenação
+├── styles/
+│   ├── index.ts           # Estilos globais, CSS vars (light/dark) e layout
+│   └── variaveis.ts       # Tokens de design (cores)
+├── test/
+│   └── reducers/          # Testes unitários dos reducers
+└── utils/
+    └── enums/Tarefa.ts    # Enums de Prioridade e Status
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## ⚙️ Como rodar localmente
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+# 1. Clone o repositório
+git clone https://github.com/viniciussilva2504/minhas-tarefas.git
+cd minhas-tarefas
 
-## Learn More
+# 2. Instale as dependências
+npm install
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# 3. Inicie o servidor de desenvolvimento
+npm run dev
+# Acesse http://localhost:3000
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Scripts disponíveis
+
+| Comando | Descrição |
+|---|---|
+| `npm run dev` | Servidor de desenvolvimento Vite na porta 3000 |
+| `npm run build` | Build de produção (`dist/`) |
+| `npm run preview` | Preview do build de produção |
+| `npm test` | Testes com Vitest em modo watch |
+| `npm run test:coverage` | Relatório de cobertura de testes |
+| `npm run lint` | Lint com ESLint |
+
+---
+
+## 🗺️ Roadmap
+
+- [x] Migração para Vite (CRA removido)
+- [x] Modo escuro com alternância e persistência
+- [x] Filtro de tarefas atrasadas
+- [x] Ordenação por prazo e prioridade
+- [x] ErrorBoundary + Loading spinner
+- [x] Testes unitários com Vitest
+- [ ] Integração com Supabase (autenticação + tarefas por usuário)
+- [ ] Drag-and-drop para reordenar tarefas
+- [ ] Notificações de prazo vencido (Service Worker)
+- [ ] PWA (instalação offline)
+
+---
+
+## 👤 Autor
+
+**Vinícius Silva**
+- GitHub: [@viniciussilva2504](https://github.com/viniciussilva2504)

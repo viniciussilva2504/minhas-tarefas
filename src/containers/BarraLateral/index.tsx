@@ -3,9 +3,14 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import FiltroCard from '../../components/FiltroCard'
 import { RootReducer } from '../../store'
 import * as enums from '../../utils/enums/Tarefa'
+import { useDarkMode } from '../../hooks/useDarkMode'
 
 import * as S from './styles'
-import { alterarTermo, alterarFiltro } from '../../store/reducers/filtros'
+import {
+  alterarTermo,
+  alterarFiltro,
+  alterarOrdenacao
+} from '../../store/reducers/filtros'
 
 type Props = {
   mostrarFiltros: boolean
@@ -15,7 +20,10 @@ const BarraLateral = ({ mostrarFiltros }: Props) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
-  const { termo, criterio } = useSelector((state: RootReducer) => state.filtros)
+  const { darkMode, toggleDarkMode } = useDarkMode()
+  const { termo, criterio, valor, ordenacao } = useSelector(
+    (state: RootReducer) => state.filtros
+  )
   const { itens } = useSelector((state: RootReducer) => state.tarefas)
 
   const estaExibindoFormulario = location.pathname === '/nova-tarefa'
@@ -39,7 +47,16 @@ const BarraLateral = ({ mostrarFiltros }: Props) => {
     if (criterio === 'normais')
       return itens.filter((item) => item.prioridade === enums.Prioridade.NORMAL)
         .length
-
+    if (criterio === 'atrasadas') {
+      const hoje = new Date()
+      hoje.setHours(0, 0, 0, 0)
+      return itens.filter(
+        (item) =>
+          item.prazo &&
+          item.status === enums.Status.PENDENTE &&
+          new Date(item.prazo + 'T00:00:00') < hoje
+      ).length
+    }
     return 0
   }
 
@@ -90,6 +107,9 @@ const BarraLateral = ({ mostrarFiltros }: Props) => {
           })
         )
         break
+      case 'atrasadas':
+        dispatch(alterarFiltro({ criterio: 'atrasadas', termo }))
+        break
       default:
         dispatch(alterarFiltro({ criterio: 'todas', termo }))
     }
@@ -98,6 +118,18 @@ const BarraLateral = ({ mostrarFiltros }: Props) => {
   return (
     <S.Aside>
       <div>
+        <S.Topo>
+          <S.TituloApp>Minhas Tarefas</S.TituloApp>
+          <S.BotaoTema
+            onClick={toggleDarkMode}
+            aria-label="Alternar tema"
+            title={
+              darkMode ? 'Mudar para tema claro' : 'Mudar para tema escuro'
+            }
+          >
+            {darkMode ? '☀️' : '🌙'}
+          </S.BotaoTema>
+        </S.Topo>
         {mostrarFiltros && (
           <>
             <S.Campo
@@ -105,6 +137,7 @@ const BarraLateral = ({ mostrarFiltros }: Props) => {
               placeholder="Buscar"
               value={termo}
               onChange={(evento) => dispatch(alterarTermo(evento.target.value))}
+              aria-label="Buscar tarefas"
             />
             <S.Filtros>
               <FiltroCard
@@ -114,36 +147,67 @@ const BarraLateral = ({ mostrarFiltros }: Props) => {
                 onClick={() => filtrarCards('todas')}
               />
               <FiltroCard
-                ativo={criterio === 'status' && termo === ''}
+                ativo={criterio === 'status' && valor === enums.Status.PENDENTE}
                 legenda="Pendentes"
                 contador={getContador('pendentes')}
                 onClick={() => filtrarCards('pendentes')}
               />
               <FiltroCard
-                ativo={criterio === 'status' && termo === ''}
+                ativo={
+                  criterio === 'status' && valor === enums.Status.CONCLUIDA
+                }
                 legenda="Concluídas"
                 contador={getContador('concluidas')}
                 onClick={() => filtrarCards('concluidas')}
               />
               <FiltroCard
-                ativo={criterio === 'prioridade' && termo === ''}
+                ativo={
+                  criterio === 'prioridade' &&
+                  valor === enums.Prioridade.URGENTE
+                }
                 legenda="Urgentes"
                 contador={getContador('urgentes')}
                 onClick={() => filtrarCards('urgentes')}
               />
               <FiltroCard
-                ativo={criterio === 'prioridade' && termo === ''}
+                ativo={
+                  criterio === 'prioridade' &&
+                  valor === enums.Prioridade.IMPORTANTE
+                }
                 legenda="Importantes"
                 contador={getContador('importantes')}
                 onClick={() => filtrarCards('importantes')}
               />
               <FiltroCard
-                ativo={criterio === 'prioridade' && termo === ''}
+                ativo={
+                  criterio === 'prioridade' && valor === enums.Prioridade.NORMAL
+                }
                 legenda="Normais"
                 contador={getContador('normais')}
                 onClick={() => filtrarCards('normais')}
               />
+              <FiltroCard
+                ativo={criterio === 'atrasadas'}
+                legenda="Atrasadas"
+                contador={getContador('atrasadas')}
+                onClick={() => filtrarCards('atrasadas')}
+              />
             </S.Filtros>
+            <S.SelectOrdenacao
+              value={ordenacao}
+              onChange={(e) =>
+                dispatch(
+                  alterarOrdenacao(
+                    e.target.value as 'padrao' | 'prazo-asc' | 'prioridade'
+                  )
+                )
+              }
+              aria-label="Ordenar tarefas"
+            >
+              <option value="padrao">Ordenar: Padrão</option>
+              <option value="prazo-asc">Ordenar: Prazo (mais urgente)</option>
+              <option value="prioridade">Ordenar: Prioridade</option>
+            </S.SelectOrdenacao>
             <S.BotaoAdicionar
               onClick={() =>
                 estaExibindoFormulario

@@ -1,11 +1,14 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 
 import EstiloGlobal, { Container } from './styles'
 import BarraLateral from './containers/BarraLateral'
 import Home from './pages/Home'
 import NovaTarefa from './pages/NovaTarefa'
-import store from './store'
+import ErrorBoundary from './components/ErrorBoundary'
+import Loading from './components/Loading'
+import store, { persistor } from './store'
 
 const Layout = ({ children }: { children: React.ReactNode }) => (
   <Container>
@@ -36,8 +39,12 @@ const router = createBrowserRouter([
 function App() {
   return (
     <Provider store={store}>
-      <EstiloGlobal />
-      <RouterProvider router={router} />
+      <PersistGate loading={<Loading />} persistor={persistor}>
+        <ErrorBoundary>
+          <EstiloGlobal />
+          <RouterProvider router={router} />
+        </ErrorBoundary>
+      </PersistGate>
     </Provider>
   )
 }
