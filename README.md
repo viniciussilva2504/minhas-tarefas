@@ -13,7 +13,7 @@
 
 ## 🚀 Demo
 
-> Deploy: [minhas-tarefas em produção](#) *(adicione o link após deploy na Vercel/Netlify)*
+> Deploy: [minhas-tarefas-ivory.vercel.app](https://minhas-tarefas-ivory.vercel.app)
 
 ---
 
