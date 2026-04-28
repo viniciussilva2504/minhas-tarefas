@@ -1,6 +1,4 @@
 export default {
-  vermelho: '#C23616',
-  verde: '#44BD32',
-  amarelo: '#F0C11A',
-  amarelo2: '#E1A32A'
+  vermelho: '#D72638',  // danger — Remover, Cancelar
+  verde: '#FF5F1F'     // accent  — SalvarSalvar, ação primária
 }

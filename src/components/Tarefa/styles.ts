@@ -1,6 +1,4 @@
 import styled, { keyframes } from 'styled-components'
-import variaveis from '../../styles/variaveis'
-
 import * as enums from '../../utils/enums/Tarefa'
 
 type TagProps = {
@@ -11,14 +9,13 @@ type TagProps = {
 
 function retornaCorDeFundo(props: TagProps): string {
   if (props.parametro === 'prioridade') {
-    if (props.prioridade === enums.Prioridade.URGENTE) return variaveis.vermelho
-    if (props.prioridade === enums.Prioridade.IMPORTANTE)
-      return variaveis.amarelo2
+    if (props.prioridade === enums.Prioridade.URGENTE) return '#FF5F1F'
+    if (props.prioridade === enums.Prioridade.IMPORTANTE) return '#52525B'
   } else {
-    if (props.status === enums.Status.PENDENTE) return variaveis.amarelo
-    if (props.status === enums.Status.CONCLUIDA) return variaveis.verde
+    if (props.status === enums.Status.PENDENTE) return '#52525B'
+    if (props.status === enums.Status.CONCLUIDA) return '#A1A1AA'
   }
-  return '#ccc'
+  return '#A1A1AA'
 }
 
 const fadeInUp = keyframes`
@@ -34,57 +31,61 @@ const fadeInUp = keyframes`
 
 export const Card = styled.div`
   background-color: var(--color-card);
-  box-shadow: 0px 4px 4px var(--color-shadow);
-  padding: 16px;
-  margin-bottom: 32px;
-  border-radius: 16px;
-  transition: background-color 0.2s;
+  border: 1px solid var(--color-border);
+  padding: 20px;
+  margin-bottom: 16px;
+  border-radius: 6px;
+  transition: background-color 0.15s, border-color 0.15s;
   animation: ${fadeInUp} 0.25s ease-out;
 `
 
 export const TagsRow = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 4px;
+  gap: 6px;
+  margin-bottom: 8px;
 `
 
 export const Prazo = styled.span<{ atrasada: boolean }>`
-  padding: 4px 8px;
+  padding: 3px 8px;
   font-size: 10px;
-  font-weight: bold;
-  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 4px;
   display: inline-block;
-  background-color: ${({ atrasada }) => (atrasada ? '#C23616' : '#2f3640')};
-  color: #fff;
+  background-color: ${({ atrasada }) =>
+    atrasada ? 'var(--color-danger)' : 'var(--color-border)'};
+  color: ${({ atrasada }) => (atrasada ? '#fff' : 'var(--color-text-muted)')};
 `
 
 export const Titulo = styled.h3`
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--color-text);
 `
 
 export const Tag = styled.span<TagProps>`
-  padding: 4px 8px;
+  padding: 3px 8px;
   color: #fff;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   background-color: ${(props) => retornaCorDeFundo(props)};
-  border-radius: 8px;
-  margin-right: 16px;
+  border-radius: 4px;
   display: inline-block;
 `
 
 export const Descricao = styled.textarea`
   color: var(--color-text-muted);
   font-size: 14px;
-  line-height: 24px;
-  font-family: 'Roboto Mono', monospace;
+  line-height: 1.6;
+  font-family: inherit;
   display: block;
   width: 100%;
   margin-bottom: 16px;
-  margin-top: 16px;
+  margin-top: 12px;
   resize: none;
   border: none;
   background-color: transparent;
@@ -92,25 +93,47 @@ export const Descricao = styled.textarea`
 
 export const BarraAcoes = styled.div`
   border-top: 1px solid var(--color-border);
-  padding-top: 16px;
+  padding-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 `
 
 export const Botao = styled.button`
-  font-weight: bold;
+  font-weight: 600;
   font-size: 12px;
-  color: #fff;
-  padding: 8px 12px;
-  border: none;
+  color: var(--color-text);
+  padding: 6px 12px;
+  border: 1px solid var(--color-border);
   cursor: pointer;
-  background-color: #2f3640;
-  border-radius: 8px;
-  margin-right: 8px;
+  background-color: transparent;
+  border-radius: 4px;
+  transition: all 0.15s;
+
+  &:hover {
+    background-color: var(--color-border);
+  }
 `
+
 export const BotaoSalvar = styled(Botao)`
-  background-color: ${variaveis.verde};
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+
+  &:hover {
+    background-color: var(--color-accent-hover);
+    border-color: var(--color-accent-hover);
+  }
 `
+
 export const BotaoCancelarRemover = styled(Botao)`
-  background-color: ${variaveis.vermelho};
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+
+  &:hover {
+    background-color: var(--color-danger);
+    color: #fff;
+  }
 `
 
 export const ConfirmacaoRemover = styled.div`
@@ -123,7 +146,7 @@ export const ConfirmacaoRemover = styled.div`
 
   span {
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 500;
     color: var(--color-text-muted);
     margin-right: 4px;
   }

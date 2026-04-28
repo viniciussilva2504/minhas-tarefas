@@ -1,13 +1,16 @@
 import styled from 'styled-components'
 
 export const Aside = styled.aside`
-  padding: 16px;
+  padding: 20px 16px;
   background-color: var(--color-sidebar);
+  border-right: 1px solid var(--color-border);
   min-height: 100vh;
-  transition: background-color 0.2s;
+  transition: background-color 0.15s;
 
   @media (max-width: 768px) {
     min-height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
     position: sticky;
     top: 0;
     z-index: 10;
@@ -18,89 +21,99 @@ export const Topo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 `
 
 export const TituloApp = styled.h1`
-  font-size: 15px;
-  font-weight: bold;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--color-text);
 `
 
 export const BotaoTema = styled.button`
   background: none;
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 4px 8px;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
   line-height: 1;
   color: var(--color-text);
-  transition: background-color 0.15s;
+  transition: all 0.15s;
 
   &:hover {
-    background-color: var(--color-border);
+    border-color: var(--color-text-muted);
   }
 `
 
 export const Filtros = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 8px;
+  grid-gap: 6px;
   margin-top: 16px;
 `
 
 export const Campo = styled.input`
-  padding: 8px;
+  padding: 8px 10px;
   background-color: var(--color-input-bg);
-  border-radius: 8px;
-  font-weight: bold;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 13px;
   color: var(--color-text);
   border: 1px solid var(--color-border);
   width: 100%;
 
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
+
   &:focus {
-    outline: 2px solid #1e90ff;
-    outline-offset: 1px;
+    outline: 2px solid var(--color-accent);
+    outline-offset: 0;
+    border-color: transparent;
   }
 `
 
 export const SelectOrdenacao = styled.select`
-  margin-top: 12px;
+  margin-top: 10px;
   width: 100%;
-  padding: 8px;
+  padding: 8px 10px;
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: 4px;
   background-color: var(--color-input-bg);
   color: var(--color-text);
-  font-weight: bold;
+  font-weight: 500;
   font-size: 12px;
   cursor: pointer;
 
   &:focus {
-    outline: 2px solid #1e90ff;
-    outline-offset: 1px;
+    outline: 2px solid var(--color-accent);
+    outline-offset: 0;
   }
 `
 
 export const BotaoAdicionar = styled.button`
-  padding: 12px 16px;
-  margin-top: 16px;
-  background-color: #44bd32;
+  padding: 10px 16px;
+  margin-top: 14px;
+  background-color: var(--color-accent);
   color: #fff;
   border: none;
-  border-radius: 8px;
-  font-weight: bold;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.03em;
   cursor: pointer;
   width: 100%;
-  transition: background-color 0.2s;
+  transition: background-color 0.15s;
 
   &:hover {
-    background-color: #2d8d1b;
+    background-color: var(--color-accent-hover);
   }
 
   &:focus-visible {
-    outline: 2px solid #1e90ff;
+    outline: 2px solid var(--color-accent);
     outline-offset: 2px;
   }
 `

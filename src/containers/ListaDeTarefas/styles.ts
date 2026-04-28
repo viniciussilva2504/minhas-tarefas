@@ -1,42 +1,44 @@
 import styled from 'styled-components'
 
 export const Container = styled.main`
-  padding: 24px 40px;
+  padding: 32px 40px;
   min-height: 100vh;
   overflow-y: auto;
 
   @media (max-width: 768px) {
-    padding: 16px;
+    padding: 20px 16px;
   }
 `
 
 export const Mensagem = styled.p`
-  text-align: center;
-  margin-top: 5px;
-  font-size: 13px;
+  margin-bottom: 24px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   color: var(--color-text-muted);
 `
 
 export const EmptyState = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 64px 24px;
+  padding: 80px 0 0;
   color: var(--color-text-muted);
-  text-align: center;
-
-  svg {
-    margin-bottom: 16px;
-  }
 
   p {
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    line-height: 1.2;
+    margin-bottom: 8px;
   }
 
   span {
-    font-size: 13px;
-    margin-top: 4px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-text-muted);
   }
 `

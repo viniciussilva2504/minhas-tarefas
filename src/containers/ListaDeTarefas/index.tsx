@@ -78,6 +78,48 @@ const ListaDeTarefas = () => {
     return lista
   }
 
+  const getMensagemVazia = (): { titulo: string; subtitulo: string } => {
+    if (termo)
+      return {
+        titulo: `Nenhum resultado para "${termo}".`,
+        subtitulo: 'Vai ler um livro enquanto pensa nisso.'
+      }
+    if (criterio === 'atrasadas')
+      return {
+        titulo: 'Nenhuma tarefa atrasada.',
+        subtitulo: 'Você é disciplinado, ou deletou tudo. Respeito.'
+      }
+    if (criterio === 'status' && valor === enums.Status.PENDENTE)
+      return {
+        titulo: 'Zero pendências.',
+        subtitulo: 'Vai caminhar no parque. Você merece.'
+      }
+    if (criterio === 'status' && valor === enums.Status.CONCLUIDA)
+      return {
+        titulo: 'Nada concluído ainda.',
+        subtitulo: 'O dia é longo. Possivelmente.'
+      }
+    if (criterio === 'prioridade' && valor === enums.Prioridade.URGENTE)
+      return {
+        titulo: 'Nenhuma urgência.',
+        subtitulo: 'Seu coração e seu cortisol agradecem.'
+      }
+    if (criterio === 'prioridade' && valor === enums.Prioridade.IMPORTANTE)
+      return {
+        titulo: 'Nada importante por aqui.',
+        subtitulo: 'Possivelmente você está de férias?'
+      }
+    if (criterio === 'prioridade' && valor === enums.Prioridade.NORMAL)
+      return {
+        titulo: 'Nenhuma tarefa normal.',
+        subtitulo: 'Normal é o que há de mais raro.'
+      }
+    return {
+      titulo: 'Nenhuma tarefa por aqui.',
+      subtitulo: 'Cadastre uma antes que o caos chegue.'
+    }
+  }
+
   const tarefas = ordenarTarefas(filtrarTarefas())
   const mensagem = exibeResultadoFiltragem(tarefas.length)
 
@@ -88,19 +130,8 @@ const ListaDeTarefas = () => {
       </Mensagem>
       {tarefas.length === 0 ? (
         <EmptyState role="status" aria-live="polite">
-          <svg
-            width="48"
-            height="48"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#ccc"
-            strokeWidth="1.5"
-          >
-            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
-            <rect x="9" y="3" width="6" height="4" rx="1" />
-          </svg>
-          <p>Nenhuma tarefa encontrada</p>
-          <span>Tente ajustar os filtros ou cadastre uma nova tarefa</span>
+          <p>{getMensagemVazia().titulo}</p>
+          <span>{getMensagemVazia().subtitulo}</span>
         </EmptyState>
       ) : (
         <ul aria-label="Lista de tarefas">

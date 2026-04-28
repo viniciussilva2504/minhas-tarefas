@@ -64,7 +64,7 @@ describe('ListaDeTarefas — integração', () => {
 
   it('exibe estado vazio quando filtro não retorna tarefas', () => {
     renderComStore({ termo: 'xyzabc' })
-    expect(screen.getByText('Nenhuma tarefa encontrada')).toBeTruthy()
+    expect(screen.getByText('Nenhum resultado para "xyzabc".')).toBeTruthy()
   })
 
   it('filtra tarefas por termo de busca', () => {
