@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import styled from 'styled-components'
@@ -43,6 +43,11 @@ const BotaoGoogle = styled.button`
   &:hover {
     border-color: var(--color-text-muted);
   }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 `
 
 const GoogleIcon = () => (
@@ -66,22 +71,58 @@ const GoogleIcon = () => (
   </svg>
 )
 
+const ErroLogin = styled.p`
+  font-size: 13px;
+  color: #d72638;
+  background: rgba(215, 38, 56, 0.08);
+  border: 1px solid rgba(215, 38, 56, 0.3);
+  border-radius: 4px;
+  padding: 8px 14px;
+  max-width: 320px;
+  text-align: center;
+  line-height: 1.5;
+`
+
 const Login = () => {
   const { user, signInWithGoogle } = useAuth()
   const navigate = useNavigate()
+  const [carregando, setCarregando] = useState(false)
+  const [erro, setErro] = useState<string | null>(null)
 
   useEffect(() => {
     if (user) navigate('/', { replace: true })
   }, [user, navigate])
 
+  const handleLogin = async () => {
+    setErro(null)
+    setCarregando(true)
+    try {
+      await signInWithGoogle()
+    } catch (e: unknown) {
+      const code = (e as { code?: string }).code ?? ''
+      if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') {
+        // utilizador fechou a popup — sem mensagem de erro
+      } else if (code === 'auth/unauthorized-domain') {
+        setErro('Domínio não autorizado no Firebase. Adicione este domínio em Firebase Console → Authentication → Authorized domains.')
+      } else if (code === 'auth/popup-blocked') {
+        setErro('A popup foi bloqueada pelo browser. Permita popups para este site e tente novamente.')
+      } else {
+        setErro(`Erro ao autenticar: ${code || 'desconhecido'}`)
+      }
+    } finally {
+      setCarregando(false)
+    }
+  }
+
   return (
     <Wrapper>
       <Titulo>Minhas Tarefas</Titulo>
       <Subtitulo>Entre para acessar suas tarefas</Subtitulo>
-      <BotaoGoogle onClick={signInWithGoogle}>
+      <BotaoGoogle onClick={handleLogin} disabled={carregando}>
         <GoogleIcon />
-        Entrar com Google
+        {carregando ? 'A autenticar...' : 'Entrar com Google'}
       </BotaoGoogle>
+      {erro && <ErroLogin>{erro}</ErroLogin>}
     </Wrapper>
   )
 }
