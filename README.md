@@ -388,6 +388,6 @@ service cloud.firestore {
 **Vinícius Silva** — Frontend Developer · React · TypeScript · Porto, Portugal
 
 [![GitHub](https://img.shields.io/badge/GitHub-viniciussilva2504-181717?logo=github&style=flat-square)](https://github.com/viniciussilva2504)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-vjsilva2504-0A66C2?logo=linkedin&style=flat-square)](https://www.linkedin.com/in/vjsilva2504/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-vjsilva2504-ff5f1f?logo=linkedin&style=flat-square)](https://www.linkedin.com/in/vjsilva2504/)
 [![Portfolio](https://img.shields.io/badge/Portfolio-portfolio--ebon--nine--95.vercel.app-ff5f1f?style=flat-square)](https://portfolio-ebon-nine-95.vercel.app)
 [![Email](https://img.shields.io/badge/Email-vinicius.silva2504@gmail.com-EA4335?logo=gmail&logoColor=white&style=flat-square)](mailto:vinicius.silva2504@gmail.com)
