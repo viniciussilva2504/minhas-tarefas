@@ -37,6 +37,32 @@ export const Card = styled.div`
   border-radius: 6px;
   transition: background-color 0.15s, border-color 0.15s;
   animation: ${fadeInUp} 0.25s ease-out;
+  position: relative;
+`
+
+export const DragHandle = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: grab;
+  color: var(--color-text-muted);
+  font-size: 18px;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 4px;
+  opacity: 0.4;
+  transition: opacity 0.15s;
+  touch-action: none;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
 `
 
 export const TagsRow = styled.div`

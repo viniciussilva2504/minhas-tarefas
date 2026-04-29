@@ -28,7 +28,9 @@ const ICONE: Record<Evento['acao'], string> = {
 const Wrapper = styled.div`
   padding: 32px 40px;
   min-height: 100vh;
-  @media (max-width: 768px) { padding: 20px 16px; }
+  @media (max-width: 768px) {
+    padding: 20px 16px;
+  }
 `
 
 const Titulo = styled.h1`
@@ -71,8 +73,11 @@ const formatarData = (ts: Timestamp | null): string => {
   if (!ts) return '—'
   const d = ts.toDate()
   return d.toLocaleString('pt-PT', {
-    day: '2-digit', month: '2-digit', year: 'numeric',
-    hour: '2-digit', minute: '2-digit'
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
   })
 }
 
@@ -89,9 +94,7 @@ const Historico = () => {
       limit(50)
     )
     const unsub = onSnapshot(q, (snap) => {
-      setEventos(
-        snap.docs.map((d) => ({ id: d.id, ...d.data() } as Evento))
-      )
+      setEventos(snap.docs.map((d) => ({ id: d.id, ...d.data() } as Evento)))
       setCarregando(false)
     })
     return unsub

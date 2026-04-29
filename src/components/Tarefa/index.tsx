@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 
 import * as S from './styles'
 import * as enums from '../../utils/enums/Tarefa'
@@ -26,6 +28,22 @@ const Tarefa = ({
 }: Props) => {
   const dispatch = useDispatch()
   const { registrar } = useHistorico()
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging
+  } = useSortable({ id })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.4 : 1,
+    zIndex: isDragging ? 999 : undefined
+  }
+
   const [estaEditando, setEstaEditando] = useState(false)
   const [estaConfirmandoRemocao, setEstaConfirmandoRemocao] = useState(false)
   const [descricao, setDescricao] = useState('')
@@ -71,7 +89,15 @@ const Tarefa = ({
     new Date(prazo + 'T00:00:00') < hoje
 
   return (
-    <S.Card role="article" aria-label={`Tarefa: ${titulo}`}>
+    <S.Card
+      ref={setNodeRef}
+      style={style}
+      role="article"
+      aria-label={`Tarefa: ${titulo}`}
+    >
+      <S.DragHandle {...attributes} {...listeners} title="Arrastar tarefa">
+        ⠿
+      </S.DragHandle>
       <S.Titulo>{titulo}</S.Titulo>
       <S.TagsRow>
         <S.Tag parametro="prioridade" prioridade={prioridade}>
