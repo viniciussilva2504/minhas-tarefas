@@ -123,3 +123,28 @@ export const BotaoAdicionar = styled.button`
     outline-offset: 2px;
   }
 `
+
+export const BotaoNav = styled.button`
+  padding: 8px 10px;
+  margin-top: 8px;
+  background: none;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 12px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: all 0.15s;
+
+  &:hover {
+    color: var(--color-text);
+    border-color: var(--color-text-muted);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+`

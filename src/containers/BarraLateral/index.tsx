@@ -5,6 +5,7 @@ import { RootReducer } from '../../store'
 import * as enums from '../../utils/enums/Tarefa'
 import { useDarkMode } from '../../hooks/useDarkMode'
 import { useAuth } from '../../contexts/AuthContext'
+import usePartilhar from '../../hooks/usePartilhar'
 
 import * as S from './styles'
 import {
@@ -23,10 +24,11 @@ const BarraLateral = ({ mostrarFiltros }: Props) => {
   const location = useLocation()
   const { darkMode, toggleDarkMode } = useDarkMode()
   const { user, logout } = useAuth()
+  const { itens } = useSelector((state: RootReducer) => state.tarefas)
+  const { copiarLink } = usePartilhar()
   const { termo, criterio, valor, ordenacao } = useSelector(
     (state: RootReducer) => state.filtros
   )
-  const { itens } = useSelector((state: RootReducer) => state.tarefas)
 
   const estaExibindoFormulario = location.pathname === '/nova-tarefa'
 
@@ -233,6 +235,20 @@ const BarraLateral = ({ mostrarFiltros }: Props) => {
                 ? 'Voltar à lista de tarefas'
                 : 'Cadastrar nova tarefa'}
             </S.BotaoAdicionar>
+            <S.BotaoNav
+              onClick={() => navigate('/historico')}
+              type="button"
+              aria-label="Ver histórico de actividade"
+            >
+              📋 Histórico
+            </S.BotaoNav>
+            <S.BotaoNav
+              onClick={() => copiarLink(itens)}
+              type="button"
+              aria-label="Copiar link para partilhar tarefas"
+            >
+              🔗 Partilhar lista
+            </S.BotaoNav>
           </>
         )}
       </div>

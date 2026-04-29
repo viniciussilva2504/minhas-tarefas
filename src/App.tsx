@@ -7,6 +7,7 @@ import BarraLateral from './containers/BarraLateral'
 import Home from './pages/Home'
 import NovaTarefa from './pages/NovaTarefa'
 import Login from './pages/Login'
+import Historico from './pages/Historico'
 import ErrorBoundary from './components/ErrorBoundary'
 import Loading from './components/Loading'
 import PrivateRoute from './components/PrivateRoute'
@@ -47,6 +48,16 @@ const router = createBrowserRouter([
       <PrivateRoute>
         <Layout>
           <NovaTarefa />
+        </Layout>
+      </PrivateRoute>
+    )
+  },
+  {
+    path: '/historico',
+    element: (
+      <PrivateRoute>
+        <Layout>
+          <Historico />
         </Layout>
       </PrivateRoute>
     )

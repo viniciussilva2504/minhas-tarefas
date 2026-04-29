@@ -6,6 +6,7 @@ import * as enums from '../../utils/enums/Tarefa'
 
 import { remover, editar } from '../../store/reducers/tarefas'
 import TarefaClass from '../../models/Tarefa'
+import useHistorico from '../../hooks/useHistorico'
 
 type Props = TarefaClass
 
@@ -24,6 +25,7 @@ const Tarefa = ({
   prazo
 }: Props) => {
   const dispatch = useDispatch()
+  const { registrar } = useHistorico()
   const [estaEditando, setEstaEditando] = useState(false)
   const [estaConfirmandoRemocao, setEstaConfirmandoRemocao] = useState(false)
   const [descricao, setDescricao] = useState('')
@@ -53,6 +55,10 @@ const Tarefa = ({
         titulo,
         id
       })
+    )
+    registrar(
+      novoStatus === enums.Status.CONCLUIDA ? 'concluiu' : 'cadastrou',
+      titulo
     )
   }
 
@@ -101,6 +107,7 @@ const Tarefa = ({
                     prazo
                   })
                 )
+                registrar('editou', titulo)
                 setEstaEditando(false)
               }}
             >
@@ -144,7 +151,10 @@ const Tarefa = ({
             <span>Confirmar remoção?</span>
             <S.BotaoCancelarRemover
               aria-label="Confirmar remoção da tarefa"
-              onClick={() => dispatch(remover(id))}
+              onClick={() => {
+                dispatch(remover(id))
+                registrar('removeu', titulo)
+              }}
             >
               Sim
             </S.BotaoCancelarRemover>

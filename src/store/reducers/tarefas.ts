@@ -47,9 +47,31 @@ const tarefasSlice = createSlice({
     },
     carregarTarefas: (state, action: PayloadAction<Tarefa[]>) => {
       state.itens = action.payload
+    },
+    reordenar: (
+      state,
+      action: PayloadAction<{ ativo: number; sobre: number }>
+    ) => {
+      const { ativo, sobre } = action.payload
+      const de = state.itens.findIndex((t) => t.id === ativo)
+      const para = state.itens.findIndex((t) => t.id === sobre)
+      if (de !== -1 && para !== -1) {
+        const copia = [...state.itens]
+        const [item] = copia.splice(de, 1)
+        copia.splice(para, 0, item)
+        state.itens = copia
+      }
     }
   }
 })
 
-export const { remover, editar, cadastrar, limparErro, carregarTarefas } = tarefasSlice.actions
+export const {
+  remover,
+  editar,
+  cadastrar,
+  limparErro,
+  carregarTarefas,
+  reordenar
+} = tarefasSlice.actions
+tarefasSlice.actions
 export default tarefasSlice.reducer

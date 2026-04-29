@@ -10,6 +10,16 @@ export const Container = styled.main`
   }
 `
 
+export const BannerOffline = styled.p`
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  border-left: 2px solid var(--color-accent);
+  padding: 6px 12px;
+  margin-bottom: 20px;
+  font-style: italic;
+`
+
 export const Mensagem = styled.p`
   margin-bottom: 24px;
   font-size: 12px;
