@@ -61,6 +61,34 @@ const tarefasSlice = createSlice({
         copia.splice(para, 0, item)
         state.itens = copia
       }
+    },
+    moverKanban: (
+      state,
+      action: PayloadAction<{ id: number; coluna: enums.ColunaKanban }>
+    ) => {
+      const tarefa = state.itens.find((t) => t.id === action.payload.id)
+      if (tarefa) {
+        tarefa.colunaKanban = action.payload.coluna
+        if (action.payload.coluna === enums.ColunaKanban.CONCLUIDA) {
+          tarefa.status = enums.Status.CONCLUIDA
+        } else if (tarefa.status === enums.Status.CONCLUIDA) {
+          tarefa.status = enums.Status.PENDENTE
+        }
+      }
+    },
+    atribuirSprint: (
+      state,
+      action: PayloadAction<{ id: number; sprintId: string | undefined }>
+    ) => {
+      const tarefa = state.itens.find((t) => t.id === action.payload.id)
+      if (tarefa) {
+        tarefa.sprintId = action.payload.sprintId
+        if (!action.payload.sprintId) {
+          tarefa.colunaKanban = undefined
+        } else if (!tarefa.colunaKanban) {
+          tarefa.colunaKanban = enums.ColunaKanban.TODO
+        }
+      }
     }
   }
 })
@@ -71,7 +99,9 @@ export const {
   cadastrar,
   limparErro,
   carregarTarefas,
-  reordenar
+  reordenar,
+  moverKanban,
+  atribuirSprint
 } = tarefasSlice.actions
 tarefasSlice.actions
 export default tarefasSlice.reducer

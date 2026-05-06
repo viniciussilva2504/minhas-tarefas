@@ -91,3 +91,48 @@ export const Opcao = styled.div`
   display: inline;
   text-transform: capitalize;
 `
+
+export const PontosGrid = styled.div`
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+`
+
+export const OpcaoPontos = styled.button<{ ativo: boolean }>`
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  border: 1px solid
+    ${({ ativo }) => (ativo ? 'var(--color-accent)' : 'var(--color-border)')};
+  background: ${({ ativo }) =>
+    ativo ? 'var(--color-accent)' : 'var(--color-input-bg)'};
+  color: ${({ ativo }) => (ativo ? '#fff' : 'var(--color-text)')};
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  &:hover {
+    border-color: var(--color-accent);
+  }
+`
+
+export const SelectSprint = styled.select`
+  padding: 9px 12px;
+  background-color: var(--color-input-bg);
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  width: 100%;
+  margin-top: 4px;
+  cursor: pointer;
+
+  &:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 0;
+    border-color: transparent;
+  }
+`

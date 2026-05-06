@@ -148,3 +148,9 @@ export const BotaoNav = styled.button`
     outline-offset: 2px;
   }
 `
+
+export const Separador = styled.hr`
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 12px 0 4px;
+`

@@ -7,6 +7,9 @@ class Tarefa {
   descricao: string
   id: number
   prazo?: string
+  pontos?: number
+  sprintId?: string
+  colunaKanban?: enums.ColunaKanban
 
   constructor(
     titulo: string,
@@ -14,7 +17,10 @@ class Tarefa {
     status: enums.Status,
     descricao: string,
     id: number,
-    prazo?: string
+    prazo?: string,
+    pontos?: number,
+    sprintId?: string,
+    colunaKanban?: enums.ColunaKanban
   ) {
     this.titulo = titulo
     this.prioridade = prioridade
@@ -22,6 +28,9 @@ class Tarefa {
     this.descricao = descricao
     this.id = id
     this.prazo = prazo
+    this.pontos = pontos
+    this.sprintId = sprintId
+    this.colunaKanban = colunaKanban
   }
 }
 

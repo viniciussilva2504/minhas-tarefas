@@ -249,6 +249,28 @@ const BarraLateral = ({ mostrarFiltros }: Props) => {
             >
               🔗 Partilhar lista
             </S.BotaoNav>
+            <S.Separador />
+            <S.BotaoNav
+              onClick={() => navigate('/sprint')}
+              type="button"
+              aria-label="Ver sprint board"
+            >
+              🏃 Sprint Board
+            </S.BotaoNav>
+            <S.BotaoNav
+              onClick={() => navigate('/backlog')}
+              type="button"
+              aria-label="Ver product backlog"
+            >
+              📦 Backlog
+            </S.BotaoNav>
+            <S.BotaoNav
+              onClick={() => navigate('/sprints')}
+              type="button"
+              aria-label="Gerir sprints"
+            >
+              ⚡ Sprints
+            </S.BotaoNav>
           </>
         )}
       </div>

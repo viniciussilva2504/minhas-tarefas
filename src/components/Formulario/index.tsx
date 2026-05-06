@@ -7,15 +7,24 @@ import { RootReducer } from '../../store'
 import * as enums from '../../utils/enums/Tarefa'
 import * as S from './styles'
 
+const PONTOS_FIBONACCI = [1, 2, 3, 5, 8, 13]
+
 const Formulario = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const erro = useSelector((state: RootReducer) => state.tarefas.erro)
+  const { itens: sprints } = useSelector((state: RootReducer) => state.sprints)
   const [titulo, setTitulo] = useState('')
   const [descricao, setDescricao] = useState('')
   const [prazo, setPrazo] = useState('')
   const [prioridade, setPrioridade] = useState(enums.Prioridade.NORMAL)
+  const [pontos, setPontos] = useState<number | undefined>(undefined)
+  const [sprintId, setSprintId] = useState<string>('')
   const [submetido, setSubmetido] = useState(false)
+
+  const sprintsDisponiveis = sprints.filter(
+    (s) => s.status === 'planejamento' || s.status === 'ativo'
+  )
 
   const formatarPrioridade = (p: string) =>
     p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()
@@ -29,7 +38,10 @@ const Formulario = () => {
         prioridade,
         descricao,
         prazo: prazo || undefined,
-        status: enums.Status.PENDENTE
+        status: enums.Status.PENDENTE,
+        pontos: pontos,
+        sprintId: sprintId || undefined,
+        colunaKanban: sprintId ? enums.ColunaKanban.TODO : undefined
       })
     )
   }
@@ -41,6 +53,8 @@ const Formulario = () => {
       setDescricao('')
       setPrazo('')
       setPrioridade(enums.Prioridade.NORMAL)
+      setPontos(undefined)
+      setSprintId('')
       setSubmetido(false)
       navigate('/')
     } else {
@@ -97,6 +111,44 @@ const Formulario = () => {
           </S.Opcao>
         ))}
       </S.Opcoes>
+      <S.Opcoes>
+        <p>Story Points</p>
+        <S.PontosGrid>
+          <S.OpcaoPontos
+            ativo={pontos === undefined}
+            type="button"
+            onClick={() => setPontos(undefined)}
+          >
+            —
+          </S.OpcaoPontos>
+          {PONTOS_FIBONACCI.map((p) => (
+            <S.OpcaoPontos
+              key={p}
+              ativo={pontos === p}
+              type="button"
+              onClick={() => setPontos(p)}
+            >
+              {p}
+            </S.OpcaoPontos>
+          ))}
+        </S.PontosGrid>
+      </S.Opcoes>
+      {sprintsDisponiveis.length > 0 && (
+        <S.Opcoes>
+          <p>Sprint</p>
+          <S.SelectSprint
+            value={sprintId}
+            onChange={(e) => setSprintId(e.target.value)}
+          >
+            <option value="">Backlog (sem sprint)</option>
+            {sprintsDisponiveis.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.nome}
+              </option>
+            ))}
+          </S.SelectSprint>
+        </S.Opcoes>
+      )}
       <S.BotaoSalvar type="submit">Cadastrar</S.BotaoSalvar>
     </S.Form>
   )

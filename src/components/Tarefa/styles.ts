@@ -103,6 +103,29 @@ export const Tag = styled.span<TagProps>`
   display: inline-block;
 `
 
+export const PontosTag = styled.span`
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: 800;
+  border-radius: 4px;
+  display: inline-block;
+  background-color: #3b82f6;
+  color: #fff;
+  letter-spacing: 0.04em;
+`
+
+export const SprintTag = styled.span`
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 4px;
+  display: inline-block;
+  background-color: var(--color-border);
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+  border: 1px solid var(--color-accent);
+`
+
 export const Descricao = styled.textarea`
   color: var(--color-text-muted);
   font-size: 14px;

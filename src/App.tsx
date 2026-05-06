@@ -8,15 +8,20 @@ import Home from './pages/Home'
 import NovaTarefa from './pages/NovaTarefa'
 import Login from './pages/Login'
 import Historico from './pages/Historico'
+import SprintBoard from './pages/SprintBoard'
+import Backlog from './pages/Backlog'
+import Sprints from './pages/Sprints'
 import ErrorBoundary from './components/ErrorBoundary'
 import Loading from './components/Loading'
 import PrivateRoute from './components/PrivateRoute'
 import { AuthProvider } from './contexts/AuthContext'
 import useFirestoreSync from './hooks/useFirestoreSync'
+import useSprintFirestoreSync from './hooks/useSprintFirestoreSync'
 import store, { persistor } from './store'
 
 const AppSync = ({ children }: { children: React.ReactNode }) => {
   useFirestoreSync()
+  useSprintFirestoreSync()
   return <>{children}</>
 }
 
@@ -58,6 +63,36 @@ const router = createBrowserRouter([
       <PrivateRoute>
         <Layout>
           <Historico />
+        </Layout>
+      </PrivateRoute>
+    )
+  },
+  {
+    path: '/sprint',
+    element: (
+      <PrivateRoute>
+        <Layout>
+          <SprintBoard />
+        </Layout>
+      </PrivateRoute>
+    )
+  },
+  {
+    path: '/backlog',
+    element: (
+      <PrivateRoute>
+        <Layout>
+          <Backlog />
+        </Layout>
+      </PrivateRoute>
+    )
+  },
+  {
+    path: '/sprints',
+    element: (
+      <PrivateRoute>
+        <Layout>
+          <Sprints />
         </Layout>
       </PrivateRoute>
     )

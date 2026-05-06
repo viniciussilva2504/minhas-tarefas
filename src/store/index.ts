@@ -4,16 +4,18 @@ import storage from 'redux-persist/lib/storage'
 import { combineReducers } from 'redux'
 import tarefasReducer from './reducers/tarefas'
 import filtrosReducer from './reducers/filtros'
+import sprintsReducer from './reducers/sprints'
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['tarefas', 'filtros']
+  whitelist: ['tarefas', 'filtros', 'sprints']
 }
 
 const rootReducer = combineReducers({
   tarefas: tarefasReducer,
-  filtros: filtrosReducer
+  filtros: filtrosReducer,
+  sprints: sprintsReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

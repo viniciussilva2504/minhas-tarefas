@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
@@ -9,6 +9,7 @@ import * as enums from '../../utils/enums/Tarefa'
 import { remover, editar } from '../../store/reducers/tarefas'
 import TarefaClass from '../../models/Tarefa'
 import useHistorico from '../../hooks/useHistorico'
+import { RootReducer } from '../../store'
 
 type Props = TarefaClass
 
@@ -24,10 +25,13 @@ const Tarefa = ({
   status,
   titulo,
   id,
-  prazo
+  prazo,
+  pontos,
+  sprintId
 }: Props) => {
   const dispatch = useDispatch()
   const { registrar } = useHistorico()
+  const { itens: sprints } = useSelector((state: RootReducer) => state.sprints)
   const {
     attributes,
     listeners,
@@ -71,7 +75,9 @@ const Tarefa = ({
         prioridade,
         status: novoStatus,
         titulo,
-        id
+        id,
+        pontos,
+        sprintId
       })
     )
     registrar(
@@ -87,6 +93,10 @@ const Tarefa = ({
     prazo &&
     status === enums.Status.PENDENTE &&
     new Date(prazo + 'T00:00:00') < hoje
+
+  const sprintNome = sprintId
+    ? sprints.find((s) => s.id === sprintId)?.nome
+    : undefined
 
   return (
     <S.Card
@@ -106,6 +116,8 @@ const Tarefa = ({
         <S.Tag parametro="status" status={status}>
           {status}
         </S.Tag>
+        {pontos && <S.PontosTag>{pontos} pts</S.PontosTag>}
+        {sprintNome && <S.SprintTag>{sprintNome}</S.SprintTag>}
         {prazoFormatado && (
           <S.Prazo atrasada={!!atrasada}>📅 {prazoFormatado}</S.Prazo>
         )}
@@ -130,7 +142,9 @@ const Tarefa = ({
                     status,
                     titulo,
                     id,
-                    prazo
+                    prazo,
+                    pontos,
+                    sprintId
                   })
                 )
                 registrar('editou', titulo)
