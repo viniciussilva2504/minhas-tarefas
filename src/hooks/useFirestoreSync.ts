@@ -64,9 +64,13 @@ const useFirestoreSync = () => {
       const anterior = prev.find((p) => p.id === c.id)
       return !anterior || JSON.stringify(anterior) !== JSON.stringify(c)
     })
-    adicionadosOuEditados.forEach((t) =>
-      setDoc(doc(colRef, String(t.id)), { ...t })
-    )
+    adicionadosOuEditados.forEach((t) => {
+      // Firestore não aceita campos com valor undefined — removê-los antes de guardar
+      const dados = Object.fromEntries(
+        Object.entries({ ...t }).filter(([, v]) => v !== undefined)
+      )
+      setDoc(doc(colRef, String(t.id)), dados)
+    })
   }, [itens, user])
 }
 

@@ -136,3 +136,121 @@ export const SelectSprint = styled.select`
     border-color: transparent;
   }
 `
+
+export const CampoRow = styled.div`
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 4px;
+
+  input {
+    flex: 1;
+    padding: 8px 12px;
+    background-color: var(--color-input-bg);
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+
+    &::placeholder {
+      color: var(--color-text-muted);
+      font-weight: 400;
+    }
+
+    &:focus {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 0;
+      border-color: transparent;
+    }
+  }
+`
+
+export const BotaoPequeno = styled.button`
+  padding: 0;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  background: var(--color-input-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  color: var(--color-text);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  &:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+`
+
+export const TagsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+`
+
+export const TagChip = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background-color: var(--color-border);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text);
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    transition: color 0.15s;
+
+    &:hover {
+      color: var(--color-danger);
+    }
+  }
+`
+
+export const SubtarefaLista = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+`
+
+export const SubtarefaItem = styled.li`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  border-radius: 4px;
+  background-color: var(--color-input-bg);
+  border: 1px solid var(--color-border);
+  font-size: 13px;
+  color: var(--color-text-muted);
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0 2px;
+    transition: color 0.15s;
+
+    &:hover {
+      color: var(--color-danger);
+    }
+  }
+`

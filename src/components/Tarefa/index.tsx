@@ -6,7 +6,7 @@ import { CSS } from '@dnd-kit/utilities'
 import * as S from './styles'
 import * as enums from '../../utils/enums/Tarefa'
 
-import { remover, editar } from '../../store/reducers/tarefas'
+import { remover, editar, toggleSubtarefa } from '../../store/reducers/tarefas'
 import TarefaClass from '../../models/Tarefa'
 import useHistorico from '../../hooks/useHistorico'
 import { RootReducer } from '../../store'
@@ -27,11 +27,15 @@ const Tarefa = ({
   id,
   prazo,
   pontos,
-  sprintId
+  sprintId,
+  tags,
+  subtarefas
 }: Props) => {
   const dispatch = useDispatch()
   const { registrar } = useHistorico()
-  const { itens: sprints } = useSelector((state: RootReducer) => state.sprints)
+  const { itens: sprints } = useSelector(
+    (state: RootReducer) => state.sprints ?? { itens: [] }
+  )
   const {
     attributes,
     listeners,
@@ -53,7 +57,7 @@ const Tarefa = ({
   const [descricao, setDescricao] = useState('')
 
   useEffect(() => {
-    if (descricaoOriginal.length > 0) {
+    if ((descricaoOriginal ?? '').length > 0) {
       setDescricao(descricaoOriginal)
     }
   }, [descricaoOriginal])
@@ -118,6 +122,9 @@ const Tarefa = ({
         </S.Tag>
         {pontos && <S.PontosTag>{pontos} pts</S.PontosTag>}
         {sprintNome && <S.SprintTag>{sprintNome}</S.SprintTag>}
+        {tags?.map((tag) => (
+          <S.EtiquetaTag key={tag}>{tag}</S.EtiquetaTag>
+        ))}
         {prazoFormatado && (
           <S.Prazo atrasada={!!atrasada}>📅 {prazoFormatado}</S.Prazo>
         )}
@@ -129,6 +136,43 @@ const Tarefa = ({
         aria-label="Descrição da tarefa"
         aria-multiline="true"
       />
+      {subtarefas && subtarefas.length > 0 && (
+        <S.ChecklistWrapper>
+          <S.ChecklistProgress>
+            <S.ProgressBar
+              pct={Math.round(
+                (subtarefas.filter((s) => s.concluida).length /
+                  subtarefas.length) *
+                  100
+              )}
+            />
+            <span>
+              {subtarefas.filter((s) => s.concluida).length}/{subtarefas.length}
+            </span>
+          </S.ChecklistProgress>
+          <ul>
+            {subtarefas.map((sub) => (
+              <S.ChecklistItem key={sub.id}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={sub.concluida}
+                    onChange={() =>
+                      dispatch(
+                        toggleSubtarefa({ tarefaId: id, subtarefaId: sub.id })
+                      )
+                    }
+                    aria-label={sub.texto}
+                  />
+                  <S.ChecklistTexto concluida={sub.concluida}>
+                    {sub.texto}
+                  </S.ChecklistTexto>
+                </label>
+              </S.ChecklistItem>
+            ))}
+          </ul>
+        </S.ChecklistWrapper>
+      )}
       <S.BarraAcoes aria-label="Ações da tarefa">
         {estaEditando ? (
           <>

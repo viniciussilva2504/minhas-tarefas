@@ -221,6 +221,11 @@ const ListaDeTarefas = () => {
                     status={t.status}
                     prioridade={t.prioridade}
                     prazo={t.prazo}
+                    pontos={t.pontos}
+                    sprintId={t.sprintId}
+                    colunaKanban={t.colunaKanban}
+                    tags={t.tags}
+                    subtarefas={t.subtarefas}
                   />
                 </li>
               ))}

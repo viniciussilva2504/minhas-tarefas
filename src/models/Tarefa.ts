@@ -1,5 +1,11 @@
 import * as enums from '../utils/enums/Tarefa'
 
+export type Subtarefa = {
+  id: string
+  texto: string
+  concluida: boolean
+}
+
 class Tarefa {
   titulo: string
   prioridade: enums.Prioridade
@@ -10,6 +16,8 @@ class Tarefa {
   pontos?: number
   sprintId?: string
   colunaKanban?: enums.ColunaKanban
+  tags?: string[]
+  subtarefas?: Subtarefa[]
 
   constructor(
     titulo: string,
@@ -20,7 +28,9 @@ class Tarefa {
     prazo?: string,
     pontos?: number,
     sprintId?: string,
-    colunaKanban?: enums.ColunaKanban
+    colunaKanban?: enums.ColunaKanban,
+    tags?: string[],
+    subtarefas?: Subtarefa[]
   ) {
     this.titulo = titulo
     this.prioridade = prioridade
@@ -31,6 +41,8 @@ class Tarefa {
     this.pontos = pontos
     this.sprintId = sprintId
     this.colunaKanban = colunaKanban
+    this.tags = tags
+    this.subtarefas = subtarefas
   }
 }
 

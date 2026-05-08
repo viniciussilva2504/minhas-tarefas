@@ -89,6 +89,18 @@ const tarefasSlice = createSlice({
           tarefa.colunaKanban = enums.ColunaKanban.TODO
         }
       }
+    },
+    toggleSubtarefa: (
+      state,
+      action: PayloadAction<{ tarefaId: number; subtarefaId: string }>
+    ) => {
+      const tarefa = state.itens.find((t) => t.id === action.payload.tarefaId)
+      if (tarefa?.subtarefas) {
+        const sub = tarefa.subtarefas.find(
+          (s) => s.id === action.payload.subtarefaId
+        )
+        if (sub) sub.concluida = !sub.concluida
+      }
     }
   }
 })
@@ -101,7 +113,7 @@ export const {
   carregarTarefas,
   reordenar,
   moverKanban,
-  atribuirSprint
+  atribuirSprint,
+  toggleSubtarefa
 } = tarefasSlice.actions
-tarefasSlice.actions
 export default tarefasSlice.reducer

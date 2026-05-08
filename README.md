@@ -376,9 +376,9 @@ service cloud.firestore {
 | ✅ | Testes E2E (Playwright, 7 specs) |
 | ✅ | CI/CD GitHub Actions → Vercel |
 | ✅ | Storybook com addon-a11y |
+| ✅ | Etiquetas personalizadas (tags) por tarefa |
+| ✅ | Sub-tarefas (checklists com barra de progresso) |
 | ⬜ | Migração para Next.js App Router |
-| ⬜ | Categorias / etiquetas personalizadas |
-| ⬜ | Sub-tarefas (checklists) |
 | ⬜ | Colaboração em tempo real |
 
 ---

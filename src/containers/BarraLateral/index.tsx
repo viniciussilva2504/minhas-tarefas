@@ -236,6 +236,13 @@ const BarraLateral = ({ mostrarFiltros }: Props) => {
                 : 'Cadastrar nova tarefa'}
             </S.BotaoAdicionar>
             <S.BotaoNav
+              onClick={() => navigate('/')}
+              type="button"
+              aria-label="Ver minhas tarefas"
+            >
+              🏠 Minhas Tarefas
+            </S.BotaoNav>
+            <S.BotaoNav
               onClick={() => navigate('/historico')}
               type="button"
               aria-label="Ver histórico de actividade"

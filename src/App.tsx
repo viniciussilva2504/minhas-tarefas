@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 
@@ -32,84 +32,81 @@ const Layout = ({ children }: { children: React.ReactNode }) => (
   </Container>
 )
 
-const router = createBrowserRouter([
-  {
-    path: '/login',
-    element: <Login />
-  },
-  {
-    path: '/',
-    element: (
-      <PrivateRoute>
-        <Layout>
-          <Home />
-        </Layout>
-      </PrivateRoute>
-    )
-  },
-  {
-    path: '/nova-tarefa',
-    element: (
-      <PrivateRoute>
-        <Layout>
-          <NovaTarefa />
-        </Layout>
-      </PrivateRoute>
-    )
-  },
-  {
-    path: '/historico',
-    element: (
-      <PrivateRoute>
-        <Layout>
-          <Historico />
-        </Layout>
-      </PrivateRoute>
-    )
-  },
-  {
-    path: '/sprint',
-    element: (
-      <PrivateRoute>
-        <Layout>
-          <SprintBoard />
-        </Layout>
-      </PrivateRoute>
-    )
-  },
-  {
-    path: '/backlog',
-    element: (
-      <PrivateRoute>
-        <Layout>
-          <Backlog />
-        </Layout>
-      </PrivateRoute>
-    )
-  },
-  {
-    path: '/sprints',
-    element: (
-      <PrivateRoute>
-        <Layout>
-          <Sprints />
-        </Layout>
-      </PrivateRoute>
-    )
-  }
-])
-
 function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={<Loading />} persistor={persistor}>
         <AuthProvider>
-          <AppSync>
-            <ErrorBoundary>
-              <EstiloGlobal />
-              <RouterProvider router={router} />
-            </ErrorBoundary>
-          </AppSync>
+          <EstiloGlobal />
+          <ErrorBoundary>
+            <AppSync>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/login" element={<Login />} />
+                  <Route
+                    path="/"
+                    element={
+                      <PrivateRoute>
+                        <Layout>
+                          <Home />
+                        </Layout>
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/nova-tarefa"
+                    element={
+                      <PrivateRoute>
+                        <Layout>
+                          <NovaTarefa />
+                        </Layout>
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/historico"
+                    element={
+                      <PrivateRoute>
+                        <Layout>
+                          <Historico />
+                        </Layout>
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/sprint"
+                    element={
+                      <PrivateRoute>
+                        <Layout>
+                          <SprintBoard />
+                        </Layout>
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/backlog"
+                    element={
+                      <PrivateRoute>
+                        <Layout>
+                          <Backlog />
+                        </Layout>
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/sprints"
+                    element={
+                      <PrivateRoute>
+                        <Layout>
+                          <Sprints />
+                        </Layout>
+                      </PrivateRoute>
+                    }
+                  />
+                </Routes>
+              </BrowserRouter>
+            </AppSync>
+          </ErrorBoundary>
         </AuthProvider>
       </PersistGate>
     </Provider>

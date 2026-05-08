@@ -54,9 +54,13 @@ const useSprintFirestoreSync = () => {
       const anterior = prev.find((p) => p.id === c.id)
       return !anterior || JSON.stringify(anterior) !== JSON.stringify(c)
     })
-    adicionadosOuEditados.forEach((s) =>
-      setDoc(doc(colRef, s.id), { ...s })
-    )
+    adicionadosOuEditados.forEach((s) => {
+      // Firestore não aceita campos com valor undefined — removê-los antes de guardar
+      const dados = Object.fromEntries(
+        Object.entries({ ...s }).filter(([, v]) => v !== undefined)
+      )
+      setDoc(doc(colRef, s.id), dados)
+    })
   }, [itens, user])
 }
 

@@ -39,6 +39,8 @@ type Props = {
 
 type State = {
   hasError: boolean
+  errorMessage?: string
+  errorStack?: string
 }
 
 class ErrorBoundary extends Component<Props, State> {
@@ -47,12 +49,20 @@ class ErrorBoundary extends Component<Props, State> {
     this.state = { hasError: false }
   }
 
-  static getDerivedStateFromError(): State {
-    return { hasError: true }
+  static getDerivedStateFromError(error: Error): State {
+    return {
+      hasError: true,
+      errorMessage: error.message,
+      errorStack: error.stack
+    }
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    console.error('ErrorBoundary caught an error:', error, info)
+    console.error('=== ErrorBoundary ====================================')
+    console.error('Message:', error.message)
+    console.error('Stack:', error.stack)
+    console.error('Component stack:', info.componentStack)
+    console.error('=====================================================')
   }
 
   render() {
@@ -60,7 +70,26 @@ class ErrorBoundary extends Component<Props, State> {
       return (
         <Container>
           <Titulo>Algo deu errado</Titulo>
-          <Mensagem>Ocorreu um erro inesperado na aplicação.</Mensagem>
+          <Mensagem>{this.state.errorMessage ?? 'Erro desconhecido.'}</Mensagem>
+          {this.state.errorStack && (
+            <pre
+              style={{
+                background: '#1a1a2e',
+                color: '#e94560',
+                padding: '12px',
+                borderRadius: '6px',
+                fontSize: '11px',
+                textAlign: 'left',
+                overflowX: 'auto',
+                maxWidth: '100%',
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-all',
+                marginBottom: '12px'
+              }}
+            >
+              {this.state.errorStack}
+            </pre>
+          )}
           <Botao onClick={() => window.location.reload()}>Recarregar</Botao>
         </Container>
       )

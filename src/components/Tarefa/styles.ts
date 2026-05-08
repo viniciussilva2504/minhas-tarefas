@@ -126,6 +126,84 @@ export const SprintTag = styled.span`
   border: 1px solid var(--color-accent);
 `
 
+export const EtiquetaTag = styled.span`
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 4px;
+  display: inline-block;
+  background-color: rgba(124, 58, 237, 0.12);
+  color: #7c3aed;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+`
+
+export const ChecklistWrapper = styled.div`
+  margin: 4px 0 14px;
+`
+
+export const ChecklistProgress = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+
+  span {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+`
+
+export const ProgressBar = styled.div<{ pct: number }>`
+  flex: 1;
+  height: 4px;
+  background-color: var(--color-border);
+  border-radius: 2px;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: ${({ pct }) => pct}%;
+    background-color: #16a34a;
+    transition: width 0.3s ease;
+  }
+`
+
+export const ChecklistItem = styled.li`
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 3px 0;
+
+  label {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    cursor: pointer;
+    flex: 1;
+  }
+
+  input[type='checkbox'] {
+    margin-top: 2px;
+    accent-color: var(--color-accent);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+`
+
+export const ChecklistTexto = styled.span<{ concluida: boolean }>`
+  font-size: 13px;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  text-decoration: ${({ concluida }) => (concluida ? 'line-through' : 'none')};
+  opacity: ${({ concluida }) => (concluida ? 0.55 : 1)};
+  transition: opacity 0.2s;
+`
+
 export const Descricao = styled.textarea`
   color: var(--color-text-muted);
   font-size: 14px;
