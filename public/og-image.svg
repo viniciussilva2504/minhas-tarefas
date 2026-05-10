@@ -1,0 +1,17 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#0F0F0F"/>
+  <circle cx="1100" cy="90" r="180" fill="#FF5F1F" fill-opacity="0.16"/>
+  <circle cx="120" cy="560" r="220" fill="#FF5F1F" fill-opacity="0.1"/>
+
+  <rect x="140" y="180" width="180" height="180" rx="44" fill="#FF5F1F"/>
+  <rect x="182" y="230" width="70" height="14" rx="7" fill="#111111"/>
+  <rect x="182" y="265" width="56" height="14" rx="7" fill="#111111"/>
+  <rect x="182" y="300" width="42" height="14" rx="7" fill="#111111"/>
+  <path d="M262 307.75L247.125 292.875C243.219 288.969 236.906 288.969 233 292.875C229.094 296.781 229.094 303.094 233 307L254.938 328.938C258.844 332.844 265.156 332.844 269.062 328.938L312.062 285.938C315.969 282.031 315.969 275.719 312.062 271.812C308.156 267.906 301.844 267.906 297.938 271.812L262 307.75Z" fill="#111111"/>
+
+  <text x="360" y="272" fill="#FFFFFF" font-family="Inter, Arial, sans-serif" font-size="84" font-weight="800">Minhas Tarefas</text>
+  <text x="360" y="340" fill="#B8B8B8" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="500">Organize seu dia com foco e simplicidade.</text>
+
+  <rect x="360" y="390" width="334" height="56" rx="14" fill="#FF5F1F"/>
+  <text x="392" y="428" fill="#111111" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">minhas-tarefas.app</text>
+</svg>

@@ -24,6 +24,18 @@ export const Topo = styled.div`
   margin-bottom: 20px;
 `
 
+export const Brand = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`
+
+export const Logo = styled.div`
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+`
+
 export const TopoAcoes = styled.div`
   display: flex;
   align-items: center;
@@ -36,6 +48,7 @@ export const TituloApp = styled.h1`
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-text);
+  line-height: 1;
 `
 
 export const BotaoTema = styled.button`

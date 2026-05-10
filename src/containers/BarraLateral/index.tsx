@@ -6,6 +6,7 @@ import * as enums from '../../utils/enums/Tarefa'
 import { useDarkMode } from '../../hooks/useDarkMode'
 import { useAuth } from '../../contexts/AuthContext'
 import usePartilhar from '../../hooks/usePartilhar'
+import BrandLogo from '../../components/BrandLogo'
 
 import * as S from './styles'
 import {
@@ -123,7 +124,12 @@ const BarraLateral = ({ mostrarFiltros }: Props) => {
     <S.Aside>
       <div>
         <S.Topo>
-          <S.TituloApp>Minhas Tarefas</S.TituloApp>
+          <S.Brand>
+            <S.Logo>
+              <BrandLogo size={22} />
+            </S.Logo>
+            <S.TituloApp>Minhas Tarefas</S.TituloApp>
+          </S.Brand>
           <S.TopoAcoes>
             <S.BotaoTema
               onClick={toggleDarkMode}

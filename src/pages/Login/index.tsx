@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import styled from 'styled-components'
+import BrandLogo from '../../components/BrandLogo'
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -18,6 +19,12 @@ const Titulo = styled.h1`
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--color-text);
+`
+
+const Brand = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `
 
 const Subtitulo = styled.p`
@@ -116,7 +123,10 @@ const Login = () => {
 
   return (
     <Wrapper>
-      <Titulo>Minhas Tarefas</Titulo>
+      <Brand>
+        <BrandLogo size={34} />
+        <Titulo>Minhas Tarefas</Titulo>
+      </Brand>
       <Subtitulo>Entre para acessar suas tarefas</Subtitulo>
       <BotaoGoogle onClick={handleLogin} disabled={carregando}>
         <GoogleIcon />
